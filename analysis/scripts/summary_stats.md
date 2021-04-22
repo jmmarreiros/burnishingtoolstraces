@@ -1,7 +1,7 @@
 Summary statistics
 ================
 Joao Marreiros
-2021-04-22 14:06:49
+2021-04-22 14:21:19
 
 -   [Load packages](#load-packages)
 -   [Get names, path and information of all
@@ -17,7 +17,6 @@ Joao Marreiros
     -   [Format name of output file](#format-name-of-output-file)
     -   [Write to XLSX](#write-to-xlsx)
     -   [Save R object](#save-r-object)
-    -   [Show files information](#show-files-information)
 -   [sessionInfo() and RStudio
     version](#sessioninfo-and-rstudio-version)
 
@@ -54,14 +53,7 @@ For any questions, comments and inputs, please contact:
 
 Joao Marreiros, <marreiros@rgzm.de>
 
-``` r
-dir_in <- "analysis/derived_data/"
-dir_out <- "analysis/summary_stats/"
-```
-
-Raw data must be located in \~/analysis/derived\_data/.  
-Formatted data will be saved in \~/analysis/summary\_stats/. The knit
-directory for this script is the project directory. —
+------------------------------------------------------------------------
 
 # Load packages
 
@@ -70,6 +62,9 @@ library(openxlsx)
 library(R.utils)
 library(tools)
 library(doBy)
+
+dir_in <- "analysis/derived_data/"
+dir_out <- "analysis/summary_stats/"
 ```
 
 ------------------------------------------------------------------------
@@ -79,14 +74,7 @@ library(doBy)
 ``` r
 data_file <- list.files(dir_in, pattern = "\\.Rbin$", full.names = TRUE)
 md5_in <- md5sum(data_file)
-info_in <- data.frame(file = basename(names(md5_in)), checksum = md5_in, 
-                      row.names = NULL)
 ```
-
-The checksum (MD5 hashes) of the imported files are:
-
-               file                         checksum
-    1 MSTRdata.Rbin 422ee34326fad0785833a2fb4d402bab
 
 # Load data into R object
 
@@ -149,8 +137,6 @@ str(imp_data)
      $ Smfc                    : num  6281985 10723090 4628049 7318909 11574299 ...
      $ HAsfc9                  : num  0.539 0.39 1.927 0.603 0.546 ...
      $ HAsfc81                 : num  0.87 0.638 2.369 0.728 0.848 ...
-
-The imported file is: “\~/analysis/derived\_data//MSTRdata.Rbin”
 
 ------------------------------------------------------------------------
 
@@ -320,11 +306,11 @@ str(s_it)
 ## Format name of output file
 
 ``` r
-file_out <- "MSTRstats"
+file_out <- "datastats"
 ```
 
 The file will be saved as
-“\~/analysis/summary\_stats/MSTRstats.\[ext\]”.
+“\~/analysis/summary\_stats/datastats.\[ext\]”.
 
 ## Write to XLSX
 
@@ -337,21 +323,6 @@ write.xlsx(list(Sample_ImpTime = s_it), file = paste0(dir_out, file_out, ".xlsx"
 ``` r
 saveObject(s_it, file = paste0(dir_out, file_out, ".Rbin"))
 ```
-
-## Show files information
-
-``` r
-files_out <- c(paste0(dir_out, file_out, ".xlsx"), paste0(dir_out, file_out, ".Rbin"))
-md5_out <- md5sum(files_out)
-info_out <- data.frame(files = basename(names(md5_out)), checksum = md5_out, 
-                       row.names = NULL)
-```
-
-The checksum (MD5 hashes) of the exported files are:
-
-               files                         checksum
-    1 MSTRstats.xlsx 2e2e57a72248773d4424451ccc3dbfd9
-    2 MSTRstats.Rbin af24588711e837443642be34799e6c0e
 
 ------------------------------------------------------------------------
 
@@ -394,7 +365,3 @@ sessionInfo()
     [41] ellipsis_0.3.1    assertthat_0.2.1  colorspace_2.0-0  Deriv_4.1.3      
     [45] tinytex_0.31      utf8_1.2.1        stringi_1.5.3     munsell_0.5.0    
     [49] broom_0.7.6       crayon_1.4.1     
-
-------------------------------------------------------------------------
-
-END OF SCRIPT

@@ -1,7 +1,7 @@
 Plots
 ================
 Joao Marreiros
-2021-04-22 14:08:13
+2021-04-22 14:21:48
 
 -   [Load packages](#load-packages)
 -   [Get name, path and information of the
@@ -20,7 +20,6 @@ Joao Marreiros
         -   [Sq vs. Vmc](#sq-vs-vmc)
         -   [Mean depth of furrows vs. mean density of
             furrows](#mean-depth-of-furrows-vs-mean-density-of-furrows)
--   [Show plot files information](#show-plot-files-information)
 -   [sessionInfo() and RStudio
     version](#sessioninfo-and-rstudio-version)
 
@@ -46,15 +45,6 @@ For any questions, comments and inputs, please contact:
 
 Joao Marreiros, <marreiros@rgzm.de>
 
-``` r
-dir_in <- "analysis/derived_data/"
-dir_out <- "analysis/plots"
-```
-
-Raw data must be located in \~/analysis/derived\_data/.  
-Formatted data will be saved in \~/analysis/plots. The knit directory
-for this script is the project directory.
-
 ------------------------------------------------------------------------
 
 # Load packages
@@ -65,6 +55,9 @@ library(ggplot2)
 library(tools)
 library(tidyverse)
 library(wesanderson)
+
+dir_in <- "analysis/derived_data/"
+dir_out <- "analysis/plots"
 ```
 
 ------------------------------------------------------------------------
@@ -74,13 +67,7 @@ library(wesanderson)
 ``` r
 data_file <- list.files(dir_in, pattern = "\\.Rbin$", full.names = TRUE)
 md5_in <- md5sum(data_file)
-info_in <- data.frame(file = basename(names(md5_in)), checksum = md5_in, row.names = NULL)
 ```
-
-The checksum (MD5 hashes) of the imported file is:
-
-               file                         checksum
-    1 MSTRdata.Rbin 422ee34326fad0785833a2fb4d402bab
 
 # Load data into R object
 
@@ -143,8 +130,6 @@ str(imp_data)
      $ Smfc                    : num  6281985 10723090 4628049 7318909 11574299 ...
      $ HAsfc9                  : num  0.539 0.39 1.927 0.603 0.546 ...
      $ HAsfc81                 : num  0.87 0.638 2.369 0.728 0.848 ...
-
-The imported file is: “\~/analysis/derived\_data//MSTRdata.Rbin”
 
 ------------------------------------------------------------------------
 
@@ -219,85 +204,9 @@ for (i in num.var) {
 }
 ```
 
-![](plots_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-2.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-3.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-4.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-5.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-6.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-7.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-8.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-9.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-10.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-11.png)<!-- -->
+    Error in sub("([^.]+)\\.[[:alnum:]]+$", "\\1", x): object 'info_in' not found
 
-    Warning: Removed 6 rows containing missing values (geom_point).
-
-    Warning: Removed 6 rows containing missing values (geom_point).
-
-    Warning: Removed 6 rows containing missing values (geom_point).
-
-    Warning: Removed 6 rows containing missing values (geom_point).
-
-![](plots_files/figure-gfm/unnamed-chunk-8-12.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-13.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-14.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-15.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-16.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-17.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-18.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-19.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-20.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-21.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-22.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-23.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-24.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-25.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-26.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-27.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-28.png)<!-- -->
-
-    Warning in min(x): no non-missing arguments to min; returning Inf
-
-    Warning in max(x): no non-missing arguments to max; returning -Inf
-
-    Warning in min(diff(sort(x))): no non-missing arguments to min; returning Inf
-
-    Warning in min(x): no non-missing arguments to min; returning Inf
-
-    Warning in max(x): no non-missing arguments to max; returning -Inf
-
-    Warning in stats::runif(length(x), -amount, amount): NAs produced
-
-    Warning: Removed 30 rows containing missing values (geom_point).
-
-    Warning: Removed 30 rows containing missing values (geom_point).
-
-    Warning in min(x): no non-missing arguments to min; returning Inf
-
-    Warning in max(x): no non-missing arguments to max; returning -Inf
-
-    Warning in min(diff(sort(x))): no non-missing arguments to min; returning Inf
-
-    Warning in min(x): no non-missing arguments to min; returning Inf
-
-    Warning in max(x): no non-missing arguments to max; returning -Inf
-
-    Warning in stats::runif(length(x), -amount, amount): NAs produced
-
-    Warning: Removed 30 rows containing missing values (geom_point).
-
-    Warning: Removed 30 rows containing missing values (geom_point).
-
-![](plots_files/figure-gfm/unnamed-chunk-8-29.png)<!-- -->
-
-    Warning in min(x): no non-missing arguments to min; returning Inf
-
-    Warning in max(x): no non-missing arguments to max; returning -Inf
-
-    Warning in min(diff(sort(x))): no non-missing arguments to min; returning Inf
-
-    Warning in min(x): no non-missing arguments to min; returning Inf
-
-    Warning in max(x): no non-missing arguments to max; returning -Inf
-
-    Warning in stats::runif(length(x), -amount, amount): NAs produced
-
-    Warning: Removed 30 rows containing missing values (geom_point).
-
-    Warning: Removed 30 rows containing missing values (geom_point).
-
-    Warning in min(x): no non-missing arguments to min; returning Inf
-
-    Warning in max(x): no non-missing arguments to max; returning -Inf
-
-    Warning in min(diff(sort(x))): no non-missing arguments to min; returning Inf
-
-    Warning in min(x): no non-missing arguments to min; returning Inf
-
-    Warning in max(x): no non-missing arguments to max; returning -Inf
-
-    Warning in stats::runif(length(x), -amount, amount): NAs produced
-
-    Warning: Removed 30 rows containing missing values (geom_point).
-
-    Warning: Removed 30 rows containing missing values (geom_point).
-
-![](plots_files/figure-gfm/unnamed-chunk-8-30.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-31.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-32.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-33.png)<!-- -->![](plots_files/figure-gfm/unnamed-chunk-8-34.png)<!-- -->
+![](plots_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 ## Scatterplots of selected variables combined with Sample.ID and Polish type
 
@@ -314,13 +223,20 @@ Sa_Sq <- ggplot(data = imp_data) +
 print(Sa_Sq)
 ```
 
-![](plots_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+![](plots_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 ``` r
 # saving the plot
 file_out <- paste0(file_path_sans_ext(info_in[["file"]]), "_scatterplot_Sa-Sq", ".pdf")
+```
+
+    Error in sub("([^.]+)\\.[[:alnum:]]+$", "\\1", x): object 'info_in' not found
+
+``` r
 ggsave(filename = file_out, plot = Sa_Sq, path = dir_out, device = "pdf")
 ```
+
+    Error in force(filename): object 'file_out' not found
 
 ### Sq vs. Vmc
 
@@ -334,12 +250,19 @@ Sq_Vmc <- ggplot(data = imp_data) +
 print(Sq_Vmc)
 ```
 
-![](plots_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+![](plots_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 ``` r
 file_out <- paste0(file_path_sans_ext(info_in[["file"]]), "_scatterplot_Sq-Vmc", ".pdf")
+```
+
+    Error in sub("([^.]+)\\.[[:alnum:]]+$", "\\1", x): object 'info_in' not found
+
+``` r
 ggsave(filename = file_out, plot = Sq_Vmc, path = dir_out, device = "pdf")
 ```
+
+    Error in force(filename): object 'file_out' not found
 
 ### Mean depth of furrows vs. mean density of furrows
 
@@ -353,98 +276,19 @@ furrows <- ggplot(data = imp_data) +
 print(furrows)
 ```
 
-![](plots_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+![](plots_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 ``` r
 file_out <- paste0(file_path_sans_ext(info_in[["file"]]), "_scatterplot_furrows", ".pdf")
+```
+
+    Error in sub("([^.]+)\\.[[:alnum:]]+$", "\\1", x): object 'info_in' not found
+
+``` r
 ggsave(filename = file_out, plot = furrows, path = dir_out, device = "pdf")
 ```
 
-------------------------------------------------------------------------
-
-# Show plot files information
-
-``` r
-info_out <- list.files(path = dir_out, pattern = "\\.pdf$", full.names = TRUE) %>% 
-            md5sum()
-```
-
-The checksum (MD5 hashes) of the exported files are:
-
-                        analysis/plots/MSTRdata_plot_Asfc.pdf 
-                           "307a3962574cada2eb1638f26d3dce64" 
-                      analysis/plots/MSTRdata_plot_epLsar.pdf 
-                           "fdeb87ec4272573ffe8789b199da1ed0" 
-             analysis/plots/MSTRdata_plot_First.direction.pdf 
-                           "a3a095da986883895d01eeccaf7200b6" 
-                     analysis/plots/MSTRdata_plot_HAsfc81.pdf 
-                           "7fc5ba1a77e582b74fd3babf3725534b" 
-                      analysis/plots/MSTRdata_plot_HAsfc9.pdf 
-                           "fee022e4e804e88ca60c017ee6db6f16" 
-    analysis/plots/MSTRdata_plot_Maximum.depth.of.furrows.pdf 
-                           "62a73648fec66138ba02183a8d6aa672" 
-     analysis/plots/MSTRdata_plot_Mean.density.of.furrows.pdf 
-                           "fdbc536a5f686cdcadd05f6e5e5064c1" 
-       analysis/plots/MSTRdata_plot_Mean.depth.of.furrows.pdf 
-                           "08206240f6c2eddffd8a9a7f63fd792e" 
-                   analysis/plots/MSTRdata_plot_NewEplsar.pdf 
-                           "fae9dc41f64b19de48f10957f5a4fe99" 
-                          analysis/plots/MSTRdata_plot_Sa.pdf 
-                           "7ab1ef3ca8015d007ec47ec66047a612" 
-                         analysis/plots/MSTRdata_plot_Sal.pdf 
-                           "ed67c983c76fe7e3c87dbb758b9311a3" 
-                         analysis/plots/MSTRdata_plot_Sdq.pdf 
-                           "3327b522764303f40136909d5e2c6686" 
-                         analysis/plots/MSTRdata_plot_Sdr.pdf 
-                           "a267c90b043c7e046d224ea070c9d9ad" 
-            analysis/plots/MSTRdata_plot_Second.direction.pdf 
-                           "31c8700ce1392ddb4b182b70f85ffa5e" 
-                         analysis/plots/MSTRdata_plot_Sku.pdf 
-                           "c94255f30e3533cd8410094dfd50b4d0" 
-                         analysis/plots/MSTRdata_plot_Smc.pdf 
-                           "7d6ce4e61e375fe3f0871eb16b2e1d79" 
-                        analysis/plots/MSTRdata_plot_Smfc.pdf 
-                           "5dd7a739aa9daa34407a9d96cd6cd4c3" 
-                         analysis/plots/MSTRdata_plot_Smr.pdf 
-                           "e4bc15dfebbdf7a0b5efb3c56d5dec90" 
-                          analysis/plots/MSTRdata_plot_Sp.pdf 
-                           "ae9a9fc0d0d11d8d9663637761882ace" 
-                          analysis/plots/MSTRdata_plot_Sq.pdf 
-                           "aa044e15634328397313380878d29ce8" 
-                         analysis/plots/MSTRdata_plot_Ssk.pdf 
-                           "9b8a971bceb7314a5e8334692bdd144e" 
-                         analysis/plots/MSTRdata_plot_Std.pdf 
-                           "bad6e0e1791c5cbf97270b94606fa972" 
-                         analysis/plots/MSTRdata_plot_Str.pdf 
-                           "7d0aa4442a957fc06fa22025c71471c2" 
-                          analysis/plots/MSTRdata_plot_Sv.pdf 
-                           "bcdd1ea5b406587595377aa6cf621fed" 
-                         analysis/plots/MSTRdata_plot_Sxp.pdf 
-                           "ed7fc85c9c076bd6a3b2acb32b7407ba" 
-                          analysis/plots/MSTRdata_plot_Sz.pdf 
-                           "83acfecb52f4aab6eab57a668b253f95" 
-            analysis/plots/MSTRdata_plot_Texture.isotropy.pdf 
-                           "816235eef881f444135fc91924a3aa99" 
-             analysis/plots/MSTRdata_plot_Third.direction.pdf 
-                           "c4ce52e0aae2e5dfe0cb9063f5dda078" 
-                          analysis/plots/MSTRdata_plot_Vm.pdf 
-                           "9362bb5df64b9c97889d3c84d13fc5b0" 
-                         analysis/plots/MSTRdata_plot_Vmc.pdf 
-                           "08a2047e3337f7317bd4bbce5db6c798" 
-                         analysis/plots/MSTRdata_plot_Vmp.pdf 
-                           "36d3555d1fa5fe11e1764bf3e8b809c3" 
-                          analysis/plots/MSTRdata_plot_Vv.pdf 
-                           "b00c17211d33c171e37f982db262945f" 
-                         analysis/plots/MSTRdata_plot_Vvc.pdf 
-                           "ee578339f1f4a5d939a792f9b34f567b" 
-                         analysis/plots/MSTRdata_plot_Vvv.pdf 
-                           "4a9061e3b3d585e8bea8fcaecfe2cce6" 
-              analysis/plots/MSTRdata_scatterplot_furrows.pdf 
-                           "a58e75b8a099b5467029bcb27d761968" 
-                analysis/plots/MSTRdata_scatterplot_Sa-Sq.pdf 
-                           "9edaf8f9beeda56dafe7a3ddcd5a3ab4" 
-               analysis/plots/MSTRdata_scatterplot_Sq-Vmc.pdf 
-                           "dcff695f1fceeb7ce68c995e0e85107a" 
+    Error in force(filename): object 'file_out' not found
 
 ------------------------------------------------------------------------
 
@@ -490,7 +334,3 @@ sessionInfo()
     [45] bslib_0.2.4       ellipsis_0.3.1    generics_0.1.0    vctrs_0.3.7      
     [49] glue_1.4.2        hms_1.0.0         yaml_2.2.1        colorspace_2.0-0 
     [53] rvest_1.0.0       knitr_1.32        haven_2.4.0       sass_0.3.1       
-
-------------------------------------------------------------------------
-
-END OF SCRIPT

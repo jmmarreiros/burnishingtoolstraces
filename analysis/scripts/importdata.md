@@ -1,7 +1,7 @@
 Import raw data
 ================
 Joao Marreiros
-2021-04-22 14:06:30
+2021-04-22 14:20:59
 
 -   [Load libraries](#load-libraries)
 -   [Get file names, path and info](#get-file-names-path-and-info)
@@ -58,14 +58,6 @@ For any questions, comments and inputs, please contact:
 
 Joao Marreiros, <marreiros@rgzm.de>
 
-``` r
-dir_in <- "analysis/raw_data/"
-dir_out <- "analysis/derived_data/"
-```
-
-Raw data will be loaded from \~/analysis/raw\_data/. Formatted data will
-be saved in \~/analysis/derived\_data/.
-
 ------------------------------------------------------------------------
 
 # Load libraries
@@ -75,6 +67,9 @@ library(openxlsx)
 library(tools)
 library(R.utils)
 library(chron)
+
+dir_in <- "analysis/raw_data/"
+dir_out <- "analysis/derived_data/"
 ```
 
 ------------------------------------------------------------------------
@@ -84,7 +79,6 @@ library(chron)
 ``` r
 data_file <- list.files(dir_in, pattern = "\\.csv$", full.names = TRUE)
 md5_in <- md5sum(data_file)
-info_in <- data.frame(file = basename(names(md5_in)), checksum = md5_in, row.names = NULL)
 ```
 
 # Import and read the original CSV-file
@@ -195,11 +189,6 @@ str(imp_data)
      $ V98 : chr  "128" "Axis name - Z" "<no unit>" "Z" ...
      $ V99 : chr  "128" "Layer type - Z" "<no unit>" "Topography" ...
       [list output truncated]
-
-The checksum (MD5 hashes) of the imported files are:
-
-             file                         checksum
-    1 rawdata.csv 6b6e5239347e94f1db7e5ec65e9a1217
 
 ------------------------------------------------------------------------
 
@@ -415,10 +404,10 @@ head(data_final)
 ## Format name of output file
 
 ``` r
-file_out <- "MSTRdata"
+file_out <- "data"
 ```
 
-The files will be saved as “\~/MSTRdata.\[ext\]”.
+The files will be saved as “\~/data.\[ext\]”.
 
 ## Write to XLSX
 
@@ -467,7 +456,3 @@ sessionInfo()
     [13] rmarkdown_2.7     stringr_1.4.0     tinytex_0.31      xfun_0.22        
     [17] yaml_2.2.1        compiler_4.0.4    htmltools_0.5.1.1 knitr_1.32       
     [21] sass_0.3.1       
-
-------------------------------------------------------------------------
-
-END OF SCRIPT

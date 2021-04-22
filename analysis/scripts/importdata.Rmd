@@ -46,15 +46,6 @@ For any questions, comments and inputs, please contact:
 
 Joao Marreiros, marreiros@rgzm.de
 
-
-```{r }
-dir_in <- "analysis/raw_data/"
-dir_out <- "analysis/derived_data/"
-```
-
-Raw data will be loaded from `r paste0("~/", dir_in)`.
-Formatted data will be saved in `r paste0("~/", dir_out)`.
-
 ___
 
 
@@ -64,6 +55,9 @@ library(openxlsx)
 library(tools)
 library(R.utils)
 library(chron)
+
+dir_in <- "analysis/raw_data/"
+dir_out <- "analysis/derived_data/"
 ```
 
 ___
@@ -72,7 +66,6 @@ ___
 ```{r}
 data_file <- list.files(dir_in, pattern = "\\.csv$", full.names = TRUE)
 md5_in <- md5sum(data_file)
-info_in <- data.frame(file = basename(names(md5_in)), checksum = md5_in, row.names = NULL)
 ```
 
 
@@ -80,11 +73,6 @@ info_in <- data.frame(file = basename(names(md5_in)), checksum = md5_in, row.nam
 ```{r}
 imp_data <- read.csv(data_file, header = FALSE, na.strings = "*****", encoding = "latin1")
 str(imp_data)
-```
-
-The checksum (MD5 hashes) of the imported files are:  
-```{r, echo = FALSE}
-info_in
 ```
 
 ___
@@ -169,7 +157,7 @@ head(data_final)
 # Save data
 ## Format name of output file
 ```{r}
-file_out <- "MSTRdata"
+file_out <- "data"
 ```
 The files will be saved as "`r paste0("~/", file_out, ".[ext]")`".
 
@@ -194,8 +182,3 @@ saveObject(data_final, file = paste0(dir_out, file_out, ".Rbin"))
 sessionInfo()
 ```
 
-
----
-
-
-END OF SCRIPT

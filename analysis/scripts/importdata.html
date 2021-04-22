@@ -325,7 +325,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Import raw data</h1>
 <h4 class="author">Joao Marreiros</h4>
-<h4 class="date">2021-04-22 14:06:29</h4>
+<h4 class="date">2021-04-22 14:20:58</h4>
 
 </div>
 
@@ -346,28 +346,27 @@ div.tocify {
 <p>To compile this markdown document do not delete or move files from their original folders.</p>
 <p>For any questions, comments and inputs, please contact:</p>
 <p>Joao Marreiros, <a href="mailto:marreiros@rgzm.de" class="email">marreiros@rgzm.de</a></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>dir_in <span class="ot">&lt;-</span> <span class="st">&quot;analysis/raw_data/&quot;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>dir_out <span class="ot">&lt;-</span> <span class="st">&quot;analysis/derived_data/&quot;</span></span></code></pre></div>
-<p>Raw data will be loaded from ~/analysis/raw_data/. Formatted data will be saved in ~/analysis/derived_data/.</p>
 <hr />
 <div id="load-libraries" class="section level1" number="1">
 <h1 number="1"><span class="header-section-number">1</span> Load libraries</h1>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(openxlsx)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tools)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(R.utils)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(chron)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(openxlsx)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tools)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(R.utils)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(chron)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>dir_in <span class="ot">&lt;-</span> <span class="st">&quot;analysis/raw_data/&quot;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>dir_out <span class="ot">&lt;-</span> <span class="st">&quot;analysis/derived_data/&quot;</span></span></code></pre></div>
 <hr />
 </div>
 <div id="get-file-names-path-and-info" class="section level1" number="2">
 <h1 number="2"><span class="header-section-number">2</span> Get file names, path and info</h1>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data_file <span class="ot">&lt;-</span> <span class="fu">list.files</span>(dir_in, <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">.csv$&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>md5_in <span class="ot">&lt;-</span> <span class="fu">md5sum</span>(data_file)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>info_in <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">file =</span> <span class="fu">basename</span>(<span class="fu">names</span>(md5_in)), <span class="at">checksum =</span> md5_in, <span class="at">row.names =</span> <span class="cn">NULL</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data_file <span class="ot">&lt;-</span> <span class="fu">list.files</span>(dir_in, <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">.csv$&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>md5_in <span class="ot">&lt;-</span> <span class="fu">md5sum</span>(data_file)</span></code></pre></div>
 </div>
 <div id="import-and-read-the-original-csv-file" class="section level1" number="3">
 <h1 number="3"><span class="header-section-number">3</span> Import and read the original CSV-file</h1>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>imp_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(data_file, <span class="at">header =</span> <span class="cn">FALSE</span>, <span class="at">na.strings =</span> <span class="st">&quot;*****&quot;</span>, <span class="at">encoding =</span> <span class="st">&quot;latin1&quot;</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(imp_data)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>imp_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(data_file, <span class="at">header =</span> <span class="cn">FALSE</span>, <span class="at">na.strings =</span> <span class="st">&quot;*****&quot;</span>, <span class="at">encoding =</span> <span class="st">&quot;latin1&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(imp_data)</span></code></pre></div>
 <pre><code>&#39;data.frame&#39;:   33 obs. of  105 variables:
  $ V1  : chr  &quot;#&quot; &quot;#&quot; &quot;#&quot; &quot;2021/04/15&quot; ...
  $ V2  : chr  &quot;#&quot; &quot;#&quot; &quot;#&quot; &quot;14:06:02&quot; ...
@@ -469,72 +468,69 @@ div.tocify {
  $ V98 : chr  &quot;128&quot; &quot;Axis name - Z&quot; &quot;&lt;no unit&gt;&quot; &quot;Z&quot; ...
  $ V99 : chr  &quot;128&quot; &quot;Layer type - Z&quot; &quot;&lt;no unit&gt;&quot; &quot;Topography&quot; ...
   [list output truncated]</code></pre>
-<p>The checksum (MD5 hashes) of the imported files are:</p>
-<pre><code>         file                         checksum
-1 rawdata.csv 6b6e5239347e94f1db7e5ec65e9a1217</code></pre>
 <hr />
 </div>
 <div id="format-data" class="section level1" number="4">
 <h1 number="4"><span class="header-section-number">4</span> Format data</h1>
 <div id="keep-only-interesting-columns-and-rows" class="section level2" number="4.1">
 <h2 number="4.1"><span class="header-section-number">4.1</span> Keep only interesting columns and rows</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># keeps only the columns and rows of interest for the analysis </span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>data_keep_col <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">16</span><span class="sc">:</span><span class="dv">17</span>, <span class="dv">20</span><span class="sc">:</span><span class="dv">22</span>, <span class="dv">24</span><span class="sc">:</span><span class="dv">26</span>, <span class="dv">29</span><span class="sc">:</span><span class="dv">32</span>, <span class="dv">50</span><span class="sc">:</span><span class="dv">83</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>data_keep_rows <span class="ot">&lt;-</span> <span class="fu">which</span>(imp_data[[<span class="dv">1</span>]] <span class="sc">!=</span> <span class="st">&quot;#&quot;</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>data_keep <span class="ot">&lt;-</span> imp_data[data_keep_rows, data_keep_col]</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># keeps only the columns and rows of interest for the analysis </span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>data_keep_col <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">16</span><span class="sc">:</span><span class="dv">17</span>, <span class="dv">20</span><span class="sc">:</span><span class="dv">22</span>, <span class="dv">24</span><span class="sc">:</span><span class="dv">26</span>, <span class="dv">29</span><span class="sc">:</span><span class="dv">32</span>, <span class="dv">50</span><span class="sc">:</span><span class="dv">83</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>data_keep_rows <span class="ot">&lt;-</span> <span class="fu">which</span>(imp_data[[<span class="dv">1</span>]] <span class="sc">!=</span> <span class="st">&quot;#&quot;</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>data_keep <span class="ot">&lt;-</span> imp_data[data_keep_rows, data_keep_col]</span></code></pre></div>
 </div>
 <div id="add-headers" class="section level2" number="4.2">
 <h2 number="4.2"><span class="header-section-number">4.2</span> Add headers</h2>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>head_data_keep <span class="ot">&lt;-</span> <span class="fu">unlist</span>(imp_data[<span class="dv">2</span>, data_keep_col]) </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(data_keep) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">.+&quot;</span>, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">.&quot;</span>, <span class="fu">make.names</span>(head_data_keep))</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(data_keep) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">.$&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="fu">colnames</span>(data_keep)) </span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>head_data_keep <span class="ot">&lt;-</span> <span class="fu">unlist</span>(imp_data[<span class="dv">2</span>, data_keep_col]) </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(data_keep) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">.+&quot;</span>, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">.&quot;</span>, <span class="fu">make.names</span>(head_data_keep))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(data_keep) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">.$&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="fu">colnames</span>(data_keep)) </span></code></pre></div>
 </div>
 <div id="identify-results-using-frame-numbers" class="section level2" number="4.3">
 <h2 number="4.3"><span class="header-section-number">4.3</span> Identify results using frame numbers</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># combines the results from the different analysis based on the column numbers </span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (ID from MountainsMAp)</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>frames <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">unlist</span>(imp_data[<span class="dv">1</span>, data_keep_col]))</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># combines the results from the different analysis based on the column numbers </span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (ID from MountainsMAp)</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>frames <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">unlist</span>(imp_data[<span class="dv">1</span>, data_keep_col]))</span></code></pre></div>
 <pre><code>Warning: NAs introduced by coercion</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ID <span class="ot">&lt;-</span> <span class="fu">which</span>(frames <span class="sc">==</span> <span class="dv">6</span>)[<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)]</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>ISO <span class="ot">&lt;-</span> <span class="fu">which</span>(frames <span class="sc">==</span> <span class="dv">17</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>furrow <span class="ot">&lt;-</span> <span class="fu">which</span>(frames <span class="sc">==</span> <span class="dv">18</span>)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>diriso <span class="ot">&lt;-</span> <span class="fu">which</span>(frames <span class="sc">%in%</span> <span class="dv">19</span><span class="sc">:</span><span class="dv">20</span>)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>SSFA <span class="ot">&lt;-</span> <span class="fu">which</span>(frames <span class="sc">%in%</span> <span class="dv">21</span><span class="sc">:</span><span class="dv">22</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ID <span class="ot">&lt;-</span> <span class="fu">which</span>(frames <span class="sc">==</span> <span class="dv">6</span>)[<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>ISO <span class="ot">&lt;-</span> <span class="fu">which</span>(frames <span class="sc">==</span> <span class="dv">17</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>furrow <span class="ot">&lt;-</span> <span class="fu">which</span>(frames <span class="sc">==</span> <span class="dv">18</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>diriso <span class="ot">&lt;-</span> <span class="fu">which</span>(frames <span class="sc">%in%</span> <span class="dv">19</span><span class="sc">:</span><span class="dv">20</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>SSFA <span class="ot">&lt;-</span> <span class="fu">which</span>(frames <span class="sc">%in%</span> <span class="dv">21</span><span class="sc">:</span><span class="dv">22</span>)</span></code></pre></div>
 </div>
 <div id="shorten-the-names-for-parameters" class="section level2" number="4.4">
 <h2 number="4.4"><span class="header-section-number">4.4</span> Shorten the names for parameters</h2>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># keeps only the important information of the headers </span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(data_keep)[ISO] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">strsplit</span>(<span class="fu">names</span>(data_keep)[ISO], <span class="st">&quot;.&quot;</span>, <span class="at">fixed =</span> <span class="cn">TRUE</span>), <span class="st">`</span><span class="at">[[</span><span class="st">`</span>, <span class="dv">1</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(data_keep)[SSFA] <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;^([A-Za-z0-9]+</span><span class="sc">\\</span><span class="st">.)+&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="fu">colnames</span>(data_keep)[SSFA])</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># keeps only the important information of the headers </span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(data_keep)[ISO] <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">strsplit</span>(<span class="fu">names</span>(data_keep)[ISO], <span class="st">&quot;.&quot;</span>, <span class="at">fixed =</span> <span class="cn">TRUE</span>), <span class="st">`</span><span class="at">[[</span><span class="st">`</span>, <span class="dv">1</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(data_keep)[SSFA] <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;^([A-Za-z0-9]+</span><span class="sc">\\</span><span class="st">.)+&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="fu">colnames</span>(data_keep)[SSFA])</span></code></pre></div>
 </div>
 <div id="save-units" class="section level2" number="4.5">
 <h2 number="4.5"><span class="header-section-number">4.5</span> Save units</h2>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># takes the units which were part of the headers and separates them; creates a data frame</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>var_num <span class="ot">&lt;-</span> <span class="fu">c</span>(ID, ISO, furrow, diriso, SSFA)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># extracts &#39;unit&#39; line for considered columns</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>units_var <span class="ot">&lt;-</span> <span class="fu">unlist</span>(imp_data[<span class="dv">3</span>, data_keep_col])[var_num] </span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># gets names associated to the units</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(units_var) <span class="ot">&lt;-</span> head_data_keep[var_num] </span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># puts all of it into a data.frame</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>units_var_table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">variable =</span> <span class="fu">names</span>(units_var), <span class="at">unit =</span> units_var) </span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># takes the units which were part of the headers and separates them; creates a data frame</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>var_num <span class="ot">&lt;-</span> <span class="fu">c</span>(ID, ISO, furrow, diriso, SSFA)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># extracts &#39;unit&#39; line for considered columns</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>units_var <span class="ot">&lt;-</span> <span class="fu">unlist</span>(imp_data[<span class="dv">3</span>, data_keep_col])[var_num] </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># gets names associated to the units</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(units_var) <span class="ot">&lt;-</span> head_data_keep[var_num] </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># puts all of it into a data.frame</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>units_var_table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">variable =</span> <span class="fu">names</span>(units_var), <span class="at">unit =</span> units_var) </span></code></pre></div>
 </div>
 <div id="convert-to-numeric" class="section level2" number="4.6">
 <h2 number="4.6"><span class="header-section-number">4.6</span> Convert to numeric</h2>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> var_num) data_keep[[i]] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(data_keep[[i]])</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> var_num) data_keep[[i]] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(data_keep[[i]])</span></code></pre></div>
 </div>
 <div id="split-the-column-name-into-several-columns" class="section level2" number="4.7">
 <h2 number="4.7"><span class="header-section-number">4.7</span> Split the column ‘Name’ into several columns</h2>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># these lines extract the artefact ID out of the path name</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>stud_name <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;.* --- &quot;</span>, <span class="st">&quot;&quot;</span>, data_keep[[<span class="st">&quot;Name&quot;</span>]])</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>split_name <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">strsplit</span>(stud_name, <span class="st">&quot;_&quot;</span>))</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># splits the ID in the separat information </span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>data_final <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(split_name[,<span class="dv">1</span>], split_name[,<span class="dv">2</span>], split_name[,<span class="dv">3</span>], split_name[,<span class="dv">4</span>], split_name[,<span class="dv">5</span>], split_name[,<span class="dv">6</span>], data_keep[<span class="sc">-</span><span class="dv">3</span>], <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(data_final)[<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Sample.ID&quot;</span>, <span class="st">&quot;Microscope&quot;</span>, <span class="st">&quot;Objective&quot;</span>, <span class="st">&quot;PolishType&quot;</span>, <span class="st">&quot;Surface&quot;</span>, <span class="st">&quot;Topo&quot;</span>, <span class="st">&quot;Acquisition.Date&quot;</span>, <span class="st">&quot;Analysis.Date&quot;</span>, <span class="st">&quot;Analysis.Time&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># these lines extract the artefact ID out of the path name</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>stud_name <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;.* --- &quot;</span>, <span class="st">&quot;&quot;</span>, data_keep[[<span class="st">&quot;Name&quot;</span>]])</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>split_name <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">strsplit</span>(stud_name, <span class="st">&quot;_&quot;</span>))</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># splits the ID in the separat information </span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>data_final <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(split_name[,<span class="dv">1</span>], split_name[,<span class="dv">2</span>], split_name[,<span class="dv">3</span>], split_name[,<span class="dv">4</span>], split_name[,<span class="dv">5</span>], split_name[,<span class="dv">6</span>], data_keep[<span class="sc">-</span><span class="dv">3</span>], <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(data_final)[<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Sample.ID&quot;</span>, <span class="st">&quot;Microscope&quot;</span>, <span class="st">&quot;Objective&quot;</span>, <span class="st">&quot;PolishType&quot;</span>, <span class="st">&quot;Surface&quot;</span>, <span class="st">&quot;Topo&quot;</span>, <span class="st">&quot;Acquisition.Date&quot;</span>, <span class="st">&quot;Analysis.Date&quot;</span>, <span class="st">&quot;Analysis.Time&quot;</span>)</span></code></pre></div>
 </div>
 <div id="check-the-result" class="section level2" number="4.8">
 <h2 number="4.8"><span class="header-section-number">4.8</span> Check the result</h2>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data_final)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data_final)</span></code></pre></div>
 <pre><code>&#39;data.frame&#39;:   30 obs. of  53 variables:
  $ Sample.ID               : chr  &quot;Kremasti4&quot; &quot;Kremasti4&quot; &quot;Kremasti4&quot; &quot;Kremasti4&quot; ...
  $ Microscope              : chr  &quot;LSM&quot; &quot;LSM&quot; &quot;LSM&quot; &quot;LSM&quot; ...
@@ -589,7 +585,7 @@ div.tocify {
  $ Smfc                    : num  6281985 10723090 4628049 7318909 11574299 ...
  $ HAsfc9                  : num  0.539 0.39 1.927 0.603 0.546 ...
  $ HAsfc81                 : num  0.87 0.638 2.369 0.728 0.848 ...</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data_final)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data_final)</span></code></pre></div>
 <pre><code>  Sample.ID Microscope Objective PolishType Surface Topo Acquisition.Date
 4 Kremasti4        LSM       50x    natural       a Topo       2021/04/15
 5 Kremasti4        LSM       50x    natural       b Topo       2021/04/15
@@ -660,23 +656,23 @@ div.tocify {
 <h1 number="5"><span class="header-section-number">5</span> Save data</h1>
 <div id="format-name-of-output-file" class="section level2" number="5.1">
 <h2 number="5.1"><span class="header-section-number">5.1</span> Format name of output file</h2>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>file_out <span class="ot">&lt;-</span> <span class="st">&quot;MSTRdata&quot;</span></span></code></pre></div>
-<p>The files will be saved as “~/MSTRdata.[ext]”.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>file_out <span class="ot">&lt;-</span> <span class="st">&quot;data&quot;</span></span></code></pre></div>
+<p>The files will be saved as “~/data.[ext]”.</p>
 </div>
 <div id="write-to-xlsx" class="section level2" number="5.2">
 <h2 number="5.2"><span class="header-section-number">5.2</span> Write to XLSX</h2>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.xlsx</span>(<span class="fu">list</span>(<span class="at">data =</span> data_final, <span class="at">units =</span> units_var_table), </span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">file =</span> <span class="fu">paste0</span>(dir_out, file_out, <span class="st">&quot;.xlsx&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.xlsx</span>(<span class="fu">list</span>(<span class="at">data =</span> data_final, <span class="at">units =</span> units_var_table), </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">file =</span> <span class="fu">paste0</span>(dir_out, file_out, <span class="st">&quot;.xlsx&quot;</span>))</span></code></pre></div>
 </div>
 <div id="save-r-object" class="section level2" number="5.3">
 <h2 number="5.3"><span class="header-section-number">5.3</span> Save R object</h2>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveObject</span>(data_final, <span class="at">file =</span> <span class="fu">paste0</span>(dir_out, file_out, <span class="st">&quot;.Rbin&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveObject</span>(data_final, <span class="at">file =</span> <span class="fu">paste0</span>(dir_out, file_out, <span class="st">&quot;.Rbin&quot;</span>))</span></code></pre></div>
 <hr />
 </div>
 </div>
 <div id="sessioninfo-and-rstudio-version" class="section level1" number="6">
 <h1 number="6"><span class="header-section-number">6</span> sessionInfo() and RStudio version</h1>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
 <pre><code>R version 4.0.4 (2021-02-15)
 Platform: x86_64-apple-darwin17.0 (64-bit)
 Running under: macOS Catalina 10.15.7
@@ -703,8 +699,6 @@ loaded via a namespace (and not attached):
 [13] rmarkdown_2.7     stringr_1.4.0     tinytex_0.31      xfun_0.22        
 [17] yaml_2.2.1        compiler_4.0.4    htmltools_0.5.1.1 knitr_1.32       
 [21] sass_0.3.1       </code></pre>
-<hr />
-<p>END OF SCRIPT</p>
 </div>
 
 

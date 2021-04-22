@@ -51,14 +51,6 @@ For any questions, comments and inputs, please contact:
 
 Joao Marreiros, marreiros@rgzm.de
 
-```{r}
-dir_in <- "analysis/derived_data/"
-dir_out <- "analysis/summary_stats/"
-```
-
-Raw data must be located in `r paste0("~/", dir_in)`.  
-Formatted data will be saved in `r paste0("~/", dir_out)`.
-The knit directory for this script is the project directory.
 ---
 
 
@@ -68,6 +60,9 @@ library(openxlsx)
 library(R.utils)
 library(tools)
 library(doBy)
+
+dir_in <- "analysis/derived_data/"
+dir_out <- "analysis/summary_stats/"
 ```
 
 
@@ -77,26 +72,14 @@ library(doBy)
 ```{r}
 data_file <- list.files(dir_in, pattern = "\\.Rbin$", full.names = TRUE)
 md5_in <- md5sum(data_file)
-info_in <- data.frame(file = basename(names(md5_in)), checksum = md5_in, 
-                      row.names = NULL)
+
 ```
-
-
-The checksum (MD5 hashes) of the imported files are:  
-```{r, echo = FALSE}
-info_in
-```
-
 
 # Load data into R object
 ```{r}
 imp_data <- loadObject(data_file)
 str(imp_data)
 ```
-
-The imported file is: "`r paste0("~/", data_file)`"  
-
-
 
 ---
 
@@ -145,7 +128,7 @@ str(s_it)
 # Save data
 ## Format name of output file
 ```{r}
-file_out <- "MSTRstats"
+file_out <- "datastats"
 ```
 The file will be saved as "`r paste0("~/", dir_out, file_out, ".[ext]")`".
 
@@ -162,21 +145,6 @@ write.xlsx(list(Sample_ImpTime = s_it), file = paste0(dir_out, file_out, ".xlsx"
 saveObject(s_it, file = paste0(dir_out, file_out, ".Rbin"))
 ```
 
-
-## Show files information
-```{r}
-files_out <- c(paste0(dir_out, file_out, ".xlsx"), paste0(dir_out, file_out, ".Rbin"))
-md5_out <- md5sum(files_out)
-info_out <- data.frame(files = basename(names(md5_out)), checksum = md5_out, 
-                       row.names = NULL)
-```
-
-The checksum (MD5 hashes) of the exported files are:  
-```{r, echo = FALSE}
-info_out
-```
-
-
 ---
 
 # sessionInfo() and RStudio version
@@ -186,6 +154,3 @@ sessionInfo()
 ```
 
 
----
-
-END OF SCRIPT

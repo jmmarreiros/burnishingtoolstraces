@@ -38,16 +38,6 @@ For any questions, comments and inputs, please contact:
 Joao Marreiros, marreiros@rgzm.de
 
 
-
-```{r}
-dir_in <- "analysis/derived_data/"
-dir_out <- "analysis/plots"
-```
-
-Raw data must be located in `r paste0("~/", dir_in)`.  
-Formatted data will be saved in `r paste0("~/", dir_out)`.
-The knit directory for this script is the project directory.
-
 ---
 
 
@@ -58,6 +48,9 @@ library(ggplot2)
 library(tools)
 library(tidyverse)
 library(wesanderson)
+
+dir_in <- "analysis/derived_data/"
+dir_out <- "analysis/plots"
 ```
 
 
@@ -67,23 +60,13 @@ library(wesanderson)
 ```{r}
 data_file <- list.files(dir_in, pattern = "\\.Rbin$", full.names = TRUE)
 md5_in <- md5sum(data_file)
-info_in <- data.frame(file = basename(names(md5_in)), checksum = md5_in, row.names = NULL)
 ```
-
-
-The checksum (MD5 hashes) of the imported file is:  
-```{r, echo = FALSE}
-info_in
-```
-
 
 # Load data into R object
 ```{r}
 imp_data <- loadObject(data_file)
 str(imp_data)
 ```
-
-The imported file is: "`r paste0("~/", data_file)`"  
 
 ---
 
@@ -174,28 +157,9 @@ ggsave(filename = file_out, plot = furrows, path = dir_out, device = "pdf")
 
 ---
 
-# Show plot files information
-```{r}
-info_out <- list.files(path = dir_out, pattern = "\\.pdf$", full.names = TRUE) %>% 
-            md5sum()
-```
-
-
-The checksum (MD5 hashes) of the exported files are:  
-```{r, echo = FALSE}
-info_out
-```
-
-
----
-
 # sessionInfo() and RStudio version
 ```{r}
 sessionInfo()
 ```
 
-
----
-
-END OF SCRIPT
 
