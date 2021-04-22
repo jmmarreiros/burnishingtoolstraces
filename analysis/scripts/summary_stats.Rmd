@@ -135,7 +135,7 @@ nminmaxmeanmedsd <- function(x){
 ##  Compute the summary statistics in groups
 ```{r}
 s_it <- summaryBy(.~ Sample.ID + Impression.Time, 
-                  data = imp_data[c("Sample.ID","Impression.Time", names(imp_data)[num.var])], 
+                  data = imp_data[c("Sample.ID","PolishType", names(imp_data)[num.var])], 
                   FUN = nminmaxmeanmedsd)
 str(s_it)
 ```
@@ -184,8 +184,6 @@ info_out
 ```{r}
 sessionInfo()
 ```
-
-RStudio version `r readLines("analysis/scripts/RStudioVersion.txt", n = 1)`.
 
 
 ---

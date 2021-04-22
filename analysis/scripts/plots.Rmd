@@ -91,7 +91,7 @@ The imported file is: "`r paste0("~/", data_file)`"
 # Prepare variables
 ## Define numeric variables
 ```{r}
-num.var <- 21:length(imp_data)
+num.var <- 20:length(imp_data)
 ```
 
 The following variables will be used: 
@@ -108,33 +108,31 @@ for (i in num.var) cat("[",i,"] ", names(imp_data)[i], "\n", sep = "")
 ## Plot just original samples/surfaces organized by parameter
 ```{r}
 
-imp_data_original <- filter(imp_data, Impression.Time == "original")
-
 for (i in num.var) {
-	p <- ggplot(data = imp_data_original, aes_string(x = "Sample.ID", y = names(imp_data_original)[i],
-	                                        colour = "Surface")) + 
+	p <- ggplot(data = imp_data, aes_string(x = "Sample.ID", y = names(imp_data)[i],
+	                                        colour = "PolishType")) + 
 	     geom_point(size = 1) +
 	     geom_jitter(width = 0.25) +  
 	     theme_classic() +
-	     labs(colour = "Surface") +
-	     labs(x = "Sample", y = gsub("\\.", " ", names(imp_data_original)[i])) +
-	     scale_colour_hue(h = c(25,225), limits = levels(imp_data_original[["Surface"]]))
+	     labs(colour = "PolishType") +
+	     labs(x = "Sample", y = gsub("\\.", " ", names(imp_data)[i])) +
+	     scale_colour_hue(h = c(25,225), limits = levels(imp_data[["Surface"]]))
   print(p)
   
   # saves the plots 
-  file_out <- paste0(file_path_sans_ext(info_in[["file"]]), "_originalsurface_plot_",
-	                   names(imp_data_original)[i], ".pdf")
+  file_out <- paste0(file_path_sans_ext(info_in[["file"]]), "_plot_",
+	                   names(imp_data)[i], ".pdf")
 	ggsave(filename = file_out, plot = p, path = dir_out, device = "pdf", width = 26,
 	       height = 21, units = "cm" )
 }
 ```
 
-## Scatterplots of selected variables combined with Sample.ID and Surface for only Original surfaces
+## Scatterplots of selected variables combined with Sample.ID and Polish type
 ### Sa vs. Sq
 ```{r}
 #plot
-Sa_Sq <- ggplot(data = imp_data_original) +  
-         geom_point(mapping = aes(x = Sa, y = Sq, colour = Surface)) +
+Sa_Sq <- ggplot(data = imp_data) +  
+         geom_point(mapping = aes(x = Sa, y = Sq, colour = PolishType)) +
          theme_classic() +
          labs(colour = "Surface") +
          facet_wrap(~ Sample.ID) +
@@ -148,8 +146,8 @@ ggsave(filename = file_out, plot = Sa_Sq, path = dir_out, device = "pdf")
 
 ### Sq vs. Vmc
 ```{r}
-Sq_Vmc <- ggplot(data = imp_data_original) +  
-          geom_point(mapping = aes(x = Sq, y = Vmc, colour = Surface)) +
+Sq_Vmc <- ggplot(data = imp_data) +  
+          geom_point(mapping = aes(x = Sq, y = Vmc, colour = PolishType)) +
           theme_classic() +
           labs(colour = "Surface") +
           facet_wrap(~ Sample.ID) +
@@ -162,8 +160,8 @@ ggsave(filename = file_out, plot = Sq_Vmc, path = dir_out, device = "pdf")
 
 ### Mean depth of furrows vs. mean density of furrows
 ```{r}
-furrows <- ggplot(data = imp_data_original) +  
-           geom_point(mapping = aes(x = Mean.depth.of.furrows, y = Mean.density.of.furrows, colour = Surface)) +
+furrows <- ggplot(data = imp_data) +  
+           geom_point(mapping = aes(x = Mean.depth.of.furrows, y = Mean.density.of.furrows, colour = PolishType)) +
            theme_classic() +
            labs(colour = "Surface", x = "Mean depth of furrows", y = "Mean density of furrows") +
            facet_wrap(~ Sample.ID) +
@@ -173,36 +171,6 @@ print(furrows)
 file_out <- paste0(file_path_sans_ext(info_in[["file"]]), "_scatterplot_furrows", ".pdf")
 ggsave(filename = file_out, plot = furrows, path = dir_out, device = "pdf")
 ```
-
-## Re-order levels of column "Impression.Time"
-```{r}
-# gets new order 
-imp_data$Impression.Time <- factor(imp_data$Impression.Time, 
-                                   levels = c("original", "24h", "60days", "90days"))
-```
-
-## Plot of all Samples organized by parameter, measured surface and Impression (Time) as information
-```{r}
-for (i in num.var) {
-	p <- ggplot(data = imp_data, aes_string(x = "Impression.Time", y = names(imp_data)[i],
-	                                        colour = "Surface")) + 
-	     geom_point(size = 1) +
-	     geom_line(aes(group = Surface)) +
-	     theme_classic() +
-	     labs(colour = "Surface") +
-	     facet_wrap(~ Sample.ID) +
-	     labs(x = "Time", y = gsub("\\.", " ", names(imp_data)[i])) +
-	     scale_colour_hue(h = c(25,225), limits = levels(imp_data[["Surface"]]))
-  print(p)
-  
-  # saves the plots 
-  file_out <- paste0(file_path_sans_ext(info_in[["file"]]), "_plot_",
-	                   names(imp_data)[i], ".pdf")
-	ggsave(filename = file_out, plot = p, path = dir_out, device = "pdf", width = 26,
-	       height = 21, units = "cm" )
-}
-```
-
 
 ---
 
@@ -219,15 +187,12 @@ info_out
 ```
 
 
-
 ---
 
 # sessionInfo() and RStudio version
 ```{r}
 sessionInfo()
 ```
-
-RStudio version `r readLines("analysis/scripts/RStudioVersion.txt", n = 1)`.
 
 
 ---
