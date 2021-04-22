@@ -1,0 +1,193 @@
+---
+title: "Summary statistics" 
+author: "Joao Marreiros"
+date: "`r Sys.time()`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    theme: cerulean
+    highlight: pygments
+    number_sections: true
+  pdf_document: default
+  github_document: 
+    toc: true
+    toc_depth: 3
+    html_preview: false
+knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile, encoding = encoding, output_format = "all", 
+  knit_root_dir = rprojroot::find_rstudio_root_file()) })
+---
+
+
+```{r Knitr Options, include=FALSE}
+knitr::opts_chunk$set(comment = NA, message = FALSE, indent = "", error = TRUE)
+```
+
+---
+
+__Brief description of the script__
+
+This R markdown document computes the output data of the resulting CSV file from the computing ISO 25178-2 parameters in ConfoMap. These data is part of the manuscript: *Dubreuil et al. A ‘family of wear’: Exploring use-wear patterns on ad hoc burnishing tools*
+
+It computes the following statistics:  
+
+* n (sample size = `length`): number of measurements  
+* smallest value (`min`)  
+* largest value (`max`)
+* mean  
+* median  
+* standard deviation (`sd`)
+
+
+This R project and respective scripts follow the procedures described by Marwick et al. 2017. 
+
+The authors would like to thank Ivan Calandra and Lisa Schunk for their help and contribution on several chunks of code included here in the script (pieces of code are also adapated from Calandra et al. 2019, Pedergnana et al. 2020a, 2020b).
+
+To compile this markdown document do not delete or move files from their original folders.
+
+For any questions, comments and inputs, please contact:
+
+Joao Marreiros, marreiros@rgzm.de
+
+```{r}
+dir_in <- "analysis/derived_data/"
+dir_out <- "analysis/summary_stats/"
+```
+
+Raw data must be located in `r paste0("~/", dir_in)`.  
+Formatted data will be saved in `r paste0("~/", dir_out)`.
+The knit directory for this script is the project directory.
+---
+
+
+# Load packages
+```{r}
+library(openxlsx)
+library(R.utils)
+library(tools)
+library(doBy)
+```
+
+
+---
+
+# Get names, path and information of all files 
+```{r}
+data_file <- list.files(dir_in, pattern = "\\.Rbin$", full.names = TRUE)
+md5_in <- md5sum(data_file)
+info_in <- data.frame(file = basename(names(md5_in)), checksum = md5_in, 
+                      row.names = NULL)
+```
+
+
+The checksum (MD5 hashes) of the imported files are:  
+```{r, echo = FALSE}
+info_in
+```
+
+
+# Load data into R object
+```{r}
+imp_data <- loadObject(data_file)
+str(imp_data)
+```
+
+The imported file is: "`r paste0("~/", data_file)`"  
+
+
+
+---
+
+
+# Define numeric variables
+```{r}
+num.var <- 21:length(imp_data)
+```
+
+The following variables will be used: 
+
+```{r, echo=FALSE}
+num.var <- 21:length(imp_data)
+```
+
+---
+
+
+# Compute summary statistics
+## Create function to compute the statistics at once
+```{r}
+nminmaxmeanmedsd <- function(x){
+	y <- x[!is.na(x)]
+	n_test <- length(y)
+	min_test <- min(y)
+	max_test <- max(y)
+	mean_test <- mean(y)
+ 	med_test <- median(y)
+ 	sd_test <- sd(y)
+ 	out <- c(n_test, min_test, max_test, mean_test, med_test, sd_test)
+ 	names(out) <- c("n", "min", "max", "mean", "median", "sd")
+ 	return(out)
+}
+```
+
+##  Compute the summary statistics in groups
+```{r}
+s_it <- summaryBy(.~ Sample.ID + Impression.Time, 
+                  data = imp_data[c("Sample.ID","Impression.Time", names(imp_data)[num.var])], 
+                  FUN = nminmaxmeanmedsd)
+str(s_it)
+```
+
+---
+
+# Save data
+## Format name of output file
+```{r}
+file_out <- "MSTRstats"
+```
+The file will be saved as "`r paste0("~/", dir_out, file_out, ".[ext]")`".
+
+
+## Write to XLSX
+```{r}
+write.xlsx(list(Sample_ImpTime = s_it), file = paste0(dir_out, file_out, ".xlsx"))
+
+```
+
+
+## Save R object
+```{r}
+saveObject(s_it, file = paste0(dir_out, file_out, ".Rbin"))
+```
+
+
+## Show files information
+```{r}
+files_out <- c(paste0(dir_out, file_out, ".xlsx"), paste0(dir_out, file_out, ".Rbin"))
+md5_out <- md5sum(files_out)
+info_out <- data.frame(files = basename(names(md5_out)), checksum = md5_out, 
+                       row.names = NULL)
+```
+
+The checksum (MD5 hashes) of the exported files are:  
+```{r, echo = FALSE}
+info_out
+```
+
+
+---
+
+# sessionInfo() and RStudio version
+
+```{r}
+sessionInfo()
+```
+
+RStudio version `r readLines("analysis/scripts/RStudioVersion.txt", n = 1)`.
+
+
+---
+
+END OF SCRIPT

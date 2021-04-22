@@ -1,0 +1,201 @@
+---
+title: "Import raw data"
+author: "Joao Marreiros"
+date: "`r Sys.time()`"
+output: 
+  pdf_document: default
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    theme: cerulean
+    highlight: pygments
+    number_sections: true
+  github_document: 
+    toc: true
+    toc_depth: 3
+    html_preview: false
+knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile, encoding = encoding, output_format = "all", 
+  knit_root_dir = rprojroot::find_rstudio_root_file()) })
+---
+
+```{r Knitr Options, include=FALSE}
+knitr::opts_chunk$set(comment = NA, message = FALSE, indent = "", error = TRUE)
+```
+
+___
+
+__Brief description of the script__
+
+This R markdown document imports and formats the output of the resulting CSV file from the computing ISO 25178-2 parameters in ConfoMap. These data is part of the manuscript: *Dubreuil et al. A ‘family of wear’: Exploring use-wear patterns on ad hoc burnishing tools*
+
+The script includes three steps:
+
+1. Reads in the original CSV-file   
+2. Formats the data   
+3. Writes an XLSX-file and save an R object ready for further analysis in R
+
+This R project and respective scripts follow the procedures described by Marwick et al. 2017. 
+
+The authors would like to thank Ivan Calandra and Lisa Schunk for their help and contribution on several chunks of code included here in the script (pieces of code are also adapated from Calandra et al. 2019, Pedergnana et al. 2020a, 2020b).
+
+To compile this markdown document do not delete or move files from their original folders.
+
+For any questions, comments and inputs, please contact:
+
+Joao Marreiros, marreiros@rgzm.de
+
+
+```{r }
+dir_in <- "analysis/raw_data/"
+dir_out <- "analysis/derived_data/"
+```
+
+Raw data will be loaded from `r paste0("~/", dir_in)`.
+Formatted data will be saved in `r paste0("~/", dir_out)`.
+
+___
+
+
+# Load libraries
+```{r}
+library(openxlsx)
+library(tools)
+library(R.utils)
+library(chron)
+```
+
+___
+
+# Get file names, path and info
+```{r}
+data_file <- list.files(dir_in, pattern = "\\.csv$", full.names = TRUE)
+md5_in <- md5sum(data_file)
+info_in <- data.frame(file = basename(names(md5_in)), checksum = md5_in, row.names = NULL)
+```
+
+
+# Import and read the original CSV-file
+```{r}
+imp_data <- read.csv(data_file, header = FALSE, na.strings = "*****", encoding = "latin1")
+str(imp_data)
+```
+
+The checksum (MD5 hashes) of the imported files are:  
+```{r, echo = FALSE}
+info_in
+```
+
+___
+
+# Format data
+## Keep only interesting columns and rows
+```{r}
+# keeps only the columns and rows of interest for the analysis 
+data_keep_col <- c(1:2, 16:17, 20:22, 24:26, 29:32, 50:83)
+data_keep_rows <- which(imp_data[[1]] != "#")
+data_keep <- imp_data[data_keep_rows, data_keep_col]
+```
+
+## Add headers
+```{r}
+head_data_keep <- unlist(imp_data[2, data_keep_col]) 
+colnames(data_keep) <- gsub("\\.+", "\\.", make.names(head_data_keep))
+colnames(data_keep) <- gsub("\\.$", "", colnames(data_keep)) 
+```
+
+## Identify results using frame numbers
+```{r}
+# combines the results from the different analysis based on the column numbers 
+# (ID from MountainsMAp)
+frames <- as.numeric(unlist(imp_data[1, data_keep_col]))
+ID <- which(frames == 6)[-(1:2)]
+ISO <- which(frames == 17)
+furrow <- which(frames == 18)
+diriso <- which(frames %in% 19:20)
+SSFA <- which(frames %in% 21:22)
+```
+
+
+## Shorten the names for parameters
+```{r}
+# keeps only the important information of the headers 
+colnames(data_keep)[ISO] <- sapply(strsplit(names(data_keep)[ISO], ".", fixed = TRUE), `[[`, 1)
+colnames(data_keep)[SSFA] <- gsub("^([A-Za-z0-9]+\\.)+", "", colnames(data_keep)[SSFA])
+```
+
+
+## Save units
+```{r}
+# takes the units which were part of the headers and separates them; creates a data frame
+var_num <- c(ID, ISO, furrow, diriso, SSFA)
+# extracts 'unit' line for considered columns
+units_var <- unlist(imp_data[3, data_keep_col])[var_num] 
+# gets names associated to the units
+names(units_var) <- head_data_keep[var_num] 
+# puts all of it into a data.frame
+units_var_table <- data.frame(variable = names(units_var), unit = units_var) 
+```
+
+
+## Convert to numeric
+```{r}
+for (i in var_num) data_keep[[i]] <- as.numeric(data_keep[[i]])
+```
+
+
+## Split the column 'Name' into several columns
+```{r}
+# these lines extract the artefact ID out of the path name
+stud_name <- gsub(".* --- ", "", data_keep[["Name"]])
+split_name <- do.call(rbind, strsplit(stud_name, "_"))
+
+# splits the ID in the separat information 
+data_final <- data.frame(split_name[,1], split_name[,2], split_name[,3], split_name[,4], split_name[,5], split_name[,6], data_keep[-3], stringsAsFactors = FALSE)
+colnames(data_final)[1:9] <- c("Sample.ID", "Microscope", "Objective", "PolishType", "Surface", "Topo", "Acquisition.Date", "Analysis.Date", "Analysis.Time")
+
+```
+
+## Check the result
+```{r}
+str(data_final)
+head(data_final)
+```
+
+
+---
+
+# Save data
+## Format name of output file
+```{r}
+file_out <- "MSTRdata"
+```
+The files will be saved as "`r paste0("~/", file_out, ".[ext]")`".
+
+
+## Write to XLSX
+```{r}
+write.xlsx(list(data = data_final, units = units_var_table), 
+           file = paste0(dir_out, file_out, ".xlsx"))
+```
+
+
+## Save R object
+```{r}
+saveObject(data_final, file = paste0(dir_out, file_out, ".Rbin"))
+```
+
+---
+
+# sessionInfo() and RStudio version
+
+```{r}
+sessionInfo()
+```
+
+
+---
+
+
+END OF SCRIPT

@@ -1,0 +1,236 @@
+---
+title: "Plots"
+author: "Joao Marreiros"
+date: "`r Sys.time()`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    theme: cerulean
+    highlight: pygments
+    number_sections: true
+  github_document: 
+    toc: true
+    toc_depth: 3
+    html_preview: false
+knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile, encoding = encoding, output_format = "all", 
+  knit_root_dir = rprojroot::find_rstudio_root_file()) })
+---
+
+```{r Knitr Options, include=FALSE}
+knitr::opts_chunk$set(comment = NA, message = FALSE, indent = "", error = TRUE)
+```
+
+__Brief description of the script__
+
+This R markdown document plots the data of the resulting CSV file from the computing ISO 25178-2 parameters in ConfoMap. These data is part of the manuscript: *Dubreuil et al. A ‘family of wear’: Exploring use-wear patterns on ad hoc burnishing tools*
+
+This R project and respective scripts follow the procedures described by Marwick et al. 2017. 
+
+The authors would like to thank Ivan Calandra and Lisa Schunk for their help and contribution on several chunks of code included here in the script (pieces of code are also adapated from Calandra et al. 2019, Pedergnana et al. 2020a, 2020b).
+
+To compile this markdown document do not delete or move files from their original folders.
+
+For any questions, comments and inputs, please contact:
+
+Joao Marreiros, marreiros@rgzm.de
+
+
+
+```{r}
+dir_in <- "analysis/derived_data/"
+dir_out <- "analysis/plots"
+```
+
+Raw data must be located in `r paste0("~/", dir_in)`.  
+Formatted data will be saved in `r paste0("~/", dir_out)`.
+The knit directory for this script is the project directory.
+
+---
+
+
+# Load packages
+```{r}
+library(R.utils)
+library(ggplot2)
+library(tools)
+library(tidyverse)
+library(wesanderson)
+```
+
+
+---
+
+# Get name, path and information of the file 
+```{r}
+data_file <- list.files(dir_in, pattern = "\\.Rbin$", full.names = TRUE)
+md5_in <- md5sum(data_file)
+info_in <- data.frame(file = basename(names(md5_in)), checksum = md5_in, row.names = NULL)
+```
+
+
+The checksum (MD5 hashes) of the imported file is:  
+```{r, echo = FALSE}
+info_in
+```
+
+
+# Load data into R object
+```{r}
+imp_data <- loadObject(data_file)
+str(imp_data)
+```
+
+The imported file is: "`r paste0("~/", data_file)`"  
+
+---
+
+
+# Prepare variables
+## Define numeric variables
+```{r}
+num.var <- 21:length(imp_data)
+```
+
+The following variables will be used: 
+
+```{r, echo=FALSE}
+for (i in num.var) cat("[",i,"] ", names(imp_data)[i], "\n", sep = "")
+```
+
+---
+
+
+# Plot each of the selected numeric variables 
+
+## Plot just original samples/surfaces organized by parameter
+```{r}
+
+imp_data_original <- filter(imp_data, Impression.Time == "original")
+
+for (i in num.var) {
+	p <- ggplot(data = imp_data_original, aes_string(x = "Sample.ID", y = names(imp_data_original)[i],
+	                                        colour = "Surface")) + 
+	     geom_point(size = 1) +
+	     geom_jitter(width = 0.25) +  
+	     theme_classic() +
+	     labs(colour = "Surface") +
+	     labs(x = "Sample", y = gsub("\\.", " ", names(imp_data_original)[i])) +
+	     scale_colour_hue(h = c(25,225), limits = levels(imp_data_original[["Surface"]]))
+  print(p)
+  
+  # saves the plots 
+  file_out <- paste0(file_path_sans_ext(info_in[["file"]]), "_originalsurface_plot_",
+	                   names(imp_data_original)[i], ".pdf")
+	ggsave(filename = file_out, plot = p, path = dir_out, device = "pdf", width = 26,
+	       height = 21, units = "cm" )
+}
+```
+
+## Scatterplots of selected variables combined with Sample.ID and Surface for only Original surfaces
+### Sa vs. Sq
+```{r}
+#plot
+Sa_Sq <- ggplot(data = imp_data_original) +  
+         geom_point(mapping = aes(x = Sa, y = Sq, colour = Surface)) +
+         theme_classic() +
+         labs(colour = "Surface") +
+         facet_wrap(~ Sample.ID) +
+         scale_colour_hue(h = c(25, 230)) 
+print(Sa_Sq)
+
+# saving the plot
+file_out <- paste0(file_path_sans_ext(info_in[["file"]]), "_scatterplot_Sa-Sq", ".pdf")
+ggsave(filename = file_out, plot = Sa_Sq, path = dir_out, device = "pdf")
+```
+
+### Sq vs. Vmc
+```{r}
+Sq_Vmc <- ggplot(data = imp_data_original) +  
+          geom_point(mapping = aes(x = Sq, y = Vmc, colour = Surface)) +
+          theme_classic() +
+          labs(colour = "Surface") +
+          facet_wrap(~ Sample.ID) +
+          scale_colour_hue(h = c(25, 230))  
+print(Sq_Vmc)
+
+file_out <- paste0(file_path_sans_ext(info_in[["file"]]), "_scatterplot_Sq-Vmc", ".pdf")
+ggsave(filename = file_out, plot = Sq_Vmc, path = dir_out, device = "pdf")
+```
+
+### Mean depth of furrows vs. mean density of furrows
+```{r}
+furrows <- ggplot(data = imp_data_original) +  
+           geom_point(mapping = aes(x = Mean.depth.of.furrows, y = Mean.density.of.furrows, colour = Surface)) +
+           theme_classic() +
+           labs(colour = "Surface", x = "Mean depth of furrows", y = "Mean density of furrows") +
+           facet_wrap(~ Sample.ID) +
+           scale_colour_hue(h = c(25, 230))
+print(furrows)
+
+file_out <- paste0(file_path_sans_ext(info_in[["file"]]), "_scatterplot_furrows", ".pdf")
+ggsave(filename = file_out, plot = furrows, path = dir_out, device = "pdf")
+```
+
+## Re-order levels of column "Impression.Time"
+```{r}
+# gets new order 
+imp_data$Impression.Time <- factor(imp_data$Impression.Time, 
+                                   levels = c("original", "24h", "60days", "90days"))
+```
+
+## Plot of all Samples organized by parameter, measured surface and Impression (Time) as information
+```{r}
+for (i in num.var) {
+	p <- ggplot(data = imp_data, aes_string(x = "Impression.Time", y = names(imp_data)[i],
+	                                        colour = "Surface")) + 
+	     geom_point(size = 1) +
+	     geom_line(aes(group = Surface)) +
+	     theme_classic() +
+	     labs(colour = "Surface") +
+	     facet_wrap(~ Sample.ID) +
+	     labs(x = "Time", y = gsub("\\.", " ", names(imp_data)[i])) +
+	     scale_colour_hue(h = c(25,225), limits = levels(imp_data[["Surface"]]))
+  print(p)
+  
+  # saves the plots 
+  file_out <- paste0(file_path_sans_ext(info_in[["file"]]), "_plot_",
+	                   names(imp_data)[i], ".pdf")
+	ggsave(filename = file_out, plot = p, path = dir_out, device = "pdf", width = 26,
+	       height = 21, units = "cm" )
+}
+```
+
+
+---
+
+# Show plot files information
+```{r}
+info_out <- list.files(path = dir_out, pattern = "\\.pdf$", full.names = TRUE) %>% 
+            md5sum()
+```
+
+
+The checksum (MD5 hashes) of the exported files are:  
+```{r, echo = FALSE}
+info_out
+```
+
+
+
+---
+
+# sessionInfo() and RStudio version
+```{r}
+sessionInfo()
+```
+
+RStudio version `r readLines("analysis/scripts/RStudioVersion.txt", n = 1)`.
+
+
+---
+
+END OF SCRIPT
+
