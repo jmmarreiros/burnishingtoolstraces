@@ -1,7 +1,7 @@
 Plots
 ================
 Joao Marreiros
-2021-04-22 14:21:48
+2021-10-28 10:15:11
 
 -   [Load packages](#load-packages)
 -   [Get name, path and information of the
@@ -28,14 +28,14 @@ Joao Marreiros
 This R markdown document plots the data of the resulting CSV file from
 the computing ISO 25178-2 parameters in ConfoMap. These data is part of
 the manuscript: *Dubreuil et al. A ‘family of wear’: Exploring use-wear
-patterns on ad hoc burnishing tools*
+patterns on ad hoc smoothing, burnishing/polishing tool*
 
 This R project and respective scripts follow the procedures described by
 Marwick et al. 2017.
 
 The authors would like to thank Ivan Calandra and Lisa Schunk for their
 help and contribution on several chunks of code included here in the
-script (pieces of code are also adapated from Calandra et al. 2019,
+script (pieces of code are also adapted from Calandra et al. 2019,
 Pedergnana et al. 2020a, 2020b).
 
 To compile this markdown document do not delete or move files from their
@@ -314,23 +314,24 @@ sessionInfo()
     [8] base     
 
     other attached packages:
-     [1] wesanderson_0.3.6 forcats_0.5.1     stringr_1.4.0     dplyr_1.0.5      
-     [5] purrr_0.3.4       readr_1.4.0       tidyr_1.1.3       tibble_3.1.1     
-     [9] tidyverse_1.3.1   ggplot2_3.3.3     R.utils_2.10.1    R.oo_1.24.0      
+     [1] wesanderson_0.3.6 forcats_0.5.1     stringr_1.4.0     dplyr_1.0.7      
+     [5] purrr_0.3.4       readr_2.0.1       tidyr_1.1.3       tibble_3.1.4     
+     [9] tidyverse_1.3.1   ggplot2_3.3.5     R.utils_2.10.1    R.oo_1.24.0      
     [13] R.methodsS3_1.8.1
 
     loaded via a namespace (and not attached):
-     [1] Rcpp_1.0.6        lubridate_1.7.10  assertthat_0.2.1  rprojroot_2.0.2  
-     [5] digest_0.6.27     utf8_1.2.1        R6_2.5.0          cellranger_1.1.0 
-     [9] backports_1.2.1   reprex_2.0.0      evaluate_0.14     httr_1.4.2       
-    [13] highr_0.9         pillar_1.6.0      rlang_0.4.10      readxl_1.3.1     
-    [17] rstudioapi_0.13   jquerylib_0.1.3   rmarkdown_2.7     labeling_0.4.2   
-    [21] munsell_0.5.0     broom_0.7.6       compiler_4.0.4    modelr_0.1.8     
-    [25] xfun_0.22         pkgconfig_2.0.3   htmltools_0.5.1.1 tidyselect_1.1.0 
-    [29] fansi_0.4.2       crayon_1.4.1      dbplyr_2.1.1      withr_2.4.2      
-    [33] grid_4.0.4        jsonlite_1.7.2    gtable_0.3.0      lifecycle_1.0.0  
-    [37] DBI_1.1.1         magrittr_2.0.1    scales_1.1.1      cli_2.4.0        
-    [41] stringi_1.5.3     farver_2.1.0      fs_1.5.0          xml2_1.3.2       
-    [45] bslib_0.2.4       ellipsis_0.3.1    generics_0.1.0    vctrs_0.3.7      
-    [49] glue_1.4.2        hms_1.0.0         yaml_2.2.1        colorspace_2.0-0 
-    [53] rvest_1.0.0       knitr_1.32        haven_2.4.0       sass_0.3.1       
+     [1] Rcpp_1.0.7       lubridate_1.7.10 assertthat_0.2.1 rprojroot_2.0.2 
+     [5] digest_0.6.27    utf8_1.2.2       R6_2.5.1         cellranger_1.1.0
+     [9] backports_1.2.1  reprex_2.0.1     evaluate_0.14    highr_0.9       
+    [13] httr_1.4.2       pillar_1.6.2     rlang_0.4.11     readxl_1.3.1    
+    [17] rstudioapi_0.13  jquerylib_0.1.4  rmarkdown_2.10   labeling_0.4.2  
+    [21] tinytex_0.33     munsell_0.5.0    broom_0.7.9      compiler_4.0.4  
+    [25] modelr_0.1.8     xfun_0.25        pkgconfig_2.0.3  htmltools_0.5.2 
+    [29] tidyselect_1.1.1 fansi_0.5.0      crayon_1.4.1     tzdb_0.1.2      
+    [33] dbplyr_2.1.1     withr_2.4.2      grid_4.0.4       jsonlite_1.7.2  
+    [37] gtable_0.3.0     lifecycle_1.0.0  DBI_1.1.1        magrittr_2.0.1  
+    [41] scales_1.1.1     cli_3.0.1        stringi_1.7.4    farver_2.1.0    
+    [45] fs_1.5.0         xml2_1.3.2       bslib_0.2.5.1    ellipsis_0.3.2  
+    [49] generics_0.1.0   vctrs_0.3.8      glue_1.4.2       hms_1.1.0       
+    [53] fastmap_1.1.0    yaml_2.2.1       colorspace_2.0-2 rvest_1.0.1     
+    [57] knitr_1.33       haven_2.4.3      sass_0.4.0      

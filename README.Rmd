@@ -11,7 +11,7 @@ knitr::opts_chunk$set(
   fig.path = "README-"
 )
 # Please put your title here to include it in the file below.
-Title <- "Title of your paper goes here"
+Title <- "A ‘family of wear’: Exploring use-wear patterns on ad hoc smoothing, burnishing/polishing tools"
 ```
 
 # burnishingtoolstraces
@@ -20,7 +20,7 @@ Title <- "Title of your paper goes here"
 
 This repository contains the data and code for our paper:
 
-> Authors, (YYYY). _`r Title`_. Name of journal/book <https://doi.org/xxx/xxx>
+> Laure Debreuil, Jérôme Robitaille, Jesus Gonzalez-Urquijo, Joao Marreiros, Anna Stroulia, (Under Revision). _`A ‘family of wear’: Exploring use-wear patterns on ad hoc smoothing, burnishing/polishing tools`_. Journal of Archaeological Theory and Method <https://doi.org/xxx/xxx>
 
 Our pre-print is online here:
 
@@ -31,7 +31,7 @@ Our pre-print is online here:
 
 Please cite this compendium as:
 
-> Authors, (`r format(Sys.Date(), "%Y")`). _Compendium of R code and data for `r Title`_. Accessed `r format(Sys.Date(), "%d %b %Y")`. Online at <https://doi.org/xxx/xxx>
+> Laure Debreuil, Jérôme Robitaille, Jesus Gonzalez-Urquijo, Joao Marreiros, Anna Stroulia, (`r format(Sys.Date(), "%Y")`). _Compendium of R code and data for `r Title`_. Accessed `r format(Sys.Date(), "%d %b %Y")`. Online at <https://doi.org/xxx/xxx>
 
 ## Contents
 

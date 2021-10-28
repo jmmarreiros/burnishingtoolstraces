@@ -1,7 +1,7 @@
 Summary statistics
 ================
 Joao Marreiros
-2021-04-22 14:21:19
+2021-10-28 10:13:54
 
 -   [Load packages](#load-packages)
 -   [Get names, path and information of all
@@ -27,7 +27,8 @@ Joao Marreiros
 This R markdown document computes the output data of the resulting CSV
 file from the computing ISO 25178-2 parameters in ConfoMap. These data
 is part of the manuscript: *Dubreuil et al. A ‘family of wear’:
-Exploring use-wear patterns on ad hoc burnishing tools*
+Exploring use-wear patterns on ad hoc smoothing, burnishing/polishing
+tool*
 
 It computes the following statistics:
 
@@ -43,7 +44,7 @@ Marwick et al. 2017.
 
 The authors would like to thank Ivan Calandra and Lisa Schunk for their
 help and contribution on several chunks of code included here in the
-script (pieces of code are also adapated from Calandra et al. 2019,
+script (pieces of code are also adapted from Calandra et al. 2019,
 Pedergnana et al. 2020a, 2020b).
 
 To compile this markdown document do not delete or move files from their
@@ -318,6 +319,8 @@ The file will be saved as
 write.xlsx(list(Sample_ImpTime = s_it), file = paste0(dir_out, file_out, ".xlsx"))
 ```
 
+    Error in saveWorkbook(wb, file = file, overwrite = overwrite): File already exists!
+
 ## Save R object
 
 ``` r
@@ -348,20 +351,25 @@ sessionInfo()
     [8] base     
 
     other attached packages:
-    [1] doBy_4.6.9        R.utils_2.10.1    R.oo_1.24.0       R.methodsS3_1.8.1
-    [5] openxlsx_4.2.3   
+    [1] doBy_4.6.11       R.utils_2.10.1    R.oo_1.24.0       R.methodsS3_1.8.1
+    [5] openxlsx_4.2.4   
 
     loaded via a namespace (and not attached):
-     [1] zip_2.1.1         Rcpp_1.0.6        bslib_0.2.4       compiler_4.0.4   
-     [5] pillar_1.6.0      jquerylib_0.1.3   digest_0.6.27     lattice_0.20-41  
-     [9] gtable_0.3.0      jsonlite_1.7.2    evaluate_0.14     lifecycle_1.0.0  
-    [13] tibble_3.1.1      pkgconfig_2.0.3   rlang_0.4.10      Matrix_1.3-2     
-    [17] DBI_1.1.1         yaml_2.2.1        xfun_0.22         dplyr_1.0.5      
-    [21] stringr_1.4.0     knitr_1.32        generics_0.1.0    vctrs_0.3.7      
-    [25] sass_0.3.1        grid_4.0.4        rprojroot_2.0.2   tidyselect_1.1.0 
-    [29] glue_1.4.2        R6_2.5.0          fansi_0.4.2       rmarkdown_2.7    
-    [33] tidyr_1.1.3       ggplot2_3.3.3     purrr_0.3.4       magrittr_2.0.1   
-    [37] backports_1.2.1   MASS_7.3-53.1     scales_1.1.1      htmltools_0.5.1.1
-    [41] ellipsis_0.3.1    assertthat_0.2.1  colorspace_2.0-0  Deriv_4.1.3      
-    [45] tinytex_0.31      utf8_1.2.1        stringi_1.5.3     munsell_0.5.0    
-    [49] broom_0.7.6       crayon_1.4.1     
+     [1] tinytex_0.33         tidyselect_1.1.1     xfun_0.25           
+     [4] bslib_0.2.5.1        purrr_0.3.4          lattice_0.20-44     
+     [7] colorspace_2.0-2     vctrs_0.3.8          generics_0.1.0      
+    [10] htmltools_0.5.2      yaml_2.2.1           utf8_1.2.2          
+    [13] rlang_0.4.11         jquerylib_0.1.4      pillar_1.6.2        
+    [16] glue_1.4.2           DBI_1.1.1            lifecycle_1.0.0     
+    [19] stringr_1.4.0        munsell_0.5.0        gtable_0.3.0        
+    [22] zip_2.2.0            curry_0.1.1          evaluate_0.14       
+    [25] knitr_1.33           fastmap_1.1.0        fansi_0.5.0         
+    [28] broom_0.7.9          Rcpp_1.0.7           scales_1.1.1        
+    [31] backports_1.2.1      jsonlite_1.7.2       Deriv_4.1.3         
+    [34] microbenchmark_1.4-7 ggplot2_3.3.5        digest_0.6.27       
+    [37] stringi_1.7.4        dplyr_1.0.7          rprojroot_2.0.2     
+    [40] grid_4.0.4           magrittr_2.0.1       sass_0.4.0          
+    [43] tibble_3.1.4         crayon_1.4.1         tidyr_1.1.3         
+    [46] pkgconfig_2.0.3      ellipsis_0.3.2       MASS_7.3-54         
+    [49] Matrix_1.3-4         assertthat_0.2.1     rmarkdown_2.10      
+    [52] R6_2.5.1             compiler_4.0.4      

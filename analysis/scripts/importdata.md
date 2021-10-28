@@ -1,7 +1,7 @@
 Import raw data
 ================
 Joao Marreiros
-2021-04-22 14:20:59
+2021-10-28 10:13:29
 
 -   [Load libraries](#load-libraries)
 -   [Get file names, path and info](#get-file-names-path-and-info)
@@ -34,7 +34,8 @@ Joao Marreiros
 This R markdown document imports and formats the output of the resulting
 CSV file from the computing ISO 25178-2 parameters in ConfoMap. These
 data is part of the manuscript: *Dubreuil et al. A ‘family of wear’:
-Exploring use-wear patterns on ad hoc burnishing tools*
+Exploring use-wear patterns on ad hoc smoothing, burnishing/polishing
+tool*
 
 The script includes three steps:
 
@@ -48,7 +49,7 @@ Marwick et al. 2017.
 
 The authors would like to thank Ivan Calandra and Lisa Schunk for their
 help and contribution on several chunks of code included here in the
-script (pieces of code are also adapated from Calandra et al. 2019,
+script (pieces of code are also adapted from Calandra et al. 2019,
 Pedergnana et al. 2020a, 2020b).
 
 To compile this markdown document do not delete or move files from their
@@ -416,6 +417,8 @@ write.xlsx(list(data = data_final, units = units_var_table),
            file = paste0(dir_out, file_out, ".xlsx"))
 ```
 
+    Error in saveWorkbook(wb, file = file, overwrite = overwrite): File already exists!
+
 ## Save R object
 
 ``` r
@@ -447,12 +450,12 @@ sessionInfo()
 
     other attached packages:
     [1] chron_2.3-56      R.utils_2.10.1    R.oo_1.24.0       R.methodsS3_1.8.1
-    [5] openxlsx_4.2.3   
+    [5] openxlsx_4.2.4   
 
     loaded via a namespace (and not attached):
-     [1] Rcpp_1.0.6        digest_0.6.27     rprojroot_2.0.2   R6_2.5.0         
-     [5] jsonlite_1.7.2    magrittr_2.0.1    evaluate_0.14     zip_2.1.1        
-     [9] rlang_0.4.10      stringi_1.5.3     jquerylib_0.1.3   bslib_0.2.4      
-    [13] rmarkdown_2.7     stringr_1.4.0     tinytex_0.31      xfun_0.22        
-    [17] yaml_2.2.1        compiler_4.0.4    htmltools_0.5.1.1 knitr_1.32       
-    [21] sass_0.3.1       
+     [1] Rcpp_1.0.7      digest_0.6.27   rprojroot_2.0.2 R6_2.5.1       
+     [5] jsonlite_1.7.2  magrittr_2.0.1  evaluate_0.14   zip_2.2.0      
+     [9] rlang_0.4.11    stringi_1.7.4   jquerylib_0.1.4 bslib_0.2.5.1  
+    [13] rmarkdown_2.10  stringr_1.4.0   tinytex_0.33    xfun_0.25      
+    [17] yaml_2.2.1      fastmap_1.1.0   compiler_4.0.4  htmltools_0.5.2
+    [21] knitr_1.33      sass_0.4.0     

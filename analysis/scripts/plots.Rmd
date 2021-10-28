@@ -10,6 +10,7 @@ output:
     theme: cerulean
     highlight: pygments
     number_sections: true
+  pdf_document: default
   github_document: 
     toc: true
     toc_depth: 3
@@ -25,11 +26,11 @@ knitr::opts_chunk$set(comment = NA, message = FALSE, indent = "", error = TRUE)
 
 __Brief description of the script__
 
-This R markdown document plots the data of the resulting CSV file from the computing ISO 25178-2 parameters in ConfoMap. These data is part of the manuscript: *Dubreuil et al. A ‘family of wear’: Exploring use-wear patterns on ad hoc burnishing tools*
+This R markdown document plots the data of the resulting CSV file from the computing ISO 25178-2 parameters in ConfoMap. These data is part of the manuscript: *Dubreuil et al. A ‘family of wear’: Exploring use-wear patterns on ad hoc smoothing, burnishing/polishing tool*
 
 This R project and respective scripts follow the procedures described by Marwick et al. 2017. 
 
-The authors would like to thank Ivan Calandra and Lisa Schunk for their help and contribution on several chunks of code included here in the script (pieces of code are also adapated from Calandra et al. 2019, Pedergnana et al. 2020a, 2020b).
+The authors would like to thank Ivan Calandra and Lisa Schunk for their help and contribution on several chunks of code included here in the script (pieces of code are also adapted from Calandra et al. 2019, Pedergnana et al. 2020a, 2020b).
 
 To compile this markdown document do not delete or move files from their original folders.
 

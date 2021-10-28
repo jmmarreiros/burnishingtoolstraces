@@ -309,12 +309,12 @@ div.tocify {
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row">
-<div class="col-sm-12 col-md-4 col-lg-3">
+<div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
 </div>
 
-<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -325,14 +325,14 @@ div.tocify {
 
 <h1 class="title toc-ignore">Summary statistics</h1>
 <h4 class="author">Joao Marreiros</h4>
-<h4 class="date">2021-04-22 14:21:14</h4>
+<h4 class="date">2021-10-28 10:13:46</h4>
 
 </div>
 
 
 <hr />
 <p><strong>Brief description of the script</strong></p>
-<p>This R markdown document computes the output data of the resulting CSV file from the computing ISO 25178-2 parameters in ConfoMap. These data is part of the manuscript: <em>Dubreuil et al. A ‘family of wear’: Exploring use-wear patterns on ad hoc burnishing tools</em></p>
+<p>This R markdown document computes the output data of the resulting CSV file from the computing ISO 25178-2 parameters in ConfoMap. These data is part of the manuscript: <em>Dubreuil et al. A ‘family of wear’: Exploring use-wear patterns on ad hoc smoothing, burnishing/polishing tool</em></p>
 <p>It computes the following statistics:</p>
 <ul>
 <li>n (sample size = <code>length</code>): number of measurements<br />
@@ -347,7 +347,7 @@ div.tocify {
 <li>standard deviation (<code>sd</code>)</li>
 </ul>
 <p>This R project and respective scripts follow the procedures described by Marwick et al. 2017.</p>
-<p>The authors would like to thank Ivan Calandra and Lisa Schunk for their help and contribution on several chunks of code included here in the script (pieces of code are also adapated from Calandra et al. 2019, Pedergnana et al. 2020a, 2020b).</p>
+<p>The authors would like to thank Ivan Calandra and Lisa Schunk for their help and contribution on several chunks of code included here in the script (pieces of code are also adapted from Calandra et al. 2019, Pedergnana et al. 2020a, 2020b).</p>
 <p>To compile this markdown document do not delete or move files from their original folders.</p>
 <p>For any questions, comments and inputs, please contact:</p>
 <p>Joao Marreiros, <a href="mailto:marreiros@rgzm.de" class="email">marreiros@rgzm.de</a></p>
@@ -579,16 +579,17 @@ div.tocify {
 <div id="write-to-xlsx" class="section level2" number="6.2">
 <h2 number="6.2"><span class="header-section-number">6.2</span> Write to XLSX</h2>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.xlsx</span>(<span class="fu">list</span>(<span class="at">Sample_ImpTime =</span> s_it), <span class="at">file =</span> <span class="fu">paste0</span>(dir_out, file_out, <span class="st">&quot;.xlsx&quot;</span>))</span></code></pre></div>
+<pre><code>Error in saveWorkbook(wb, file = file, overwrite = overwrite): File already exists!</code></pre>
 </div>
 <div id="save-r-object" class="section level2" number="6.3">
 <h2 number="6.3"><span class="header-section-number">6.3</span> Save R object</h2>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveObject</span>(s_it, <span class="at">file =</span> <span class="fu">paste0</span>(dir_out, file_out, <span class="st">&quot;.Rbin&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveObject</span>(s_it, <span class="at">file =</span> <span class="fu">paste0</span>(dir_out, file_out, <span class="st">&quot;.Rbin&quot;</span>))</span></code></pre></div>
 <hr />
 </div>
 </div>
 <div id="sessioninfo-and-rstudio-version" class="section level1" number="7">
 <h1 number="7"><span class="header-section-number">7</span> sessionInfo() and RStudio version</h1>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
 <pre><code>R version 4.0.4 (2021-02-15)
 Platform: x86_64-apple-darwin17.0 (64-bit)
 Running under: macOS Catalina 10.15.7
@@ -605,23 +606,28 @@ attached base packages:
 [8] base     
 
 other attached packages:
-[1] doBy_4.6.9        R.utils_2.10.1    R.oo_1.24.0       R.methodsS3_1.8.1
-[5] openxlsx_4.2.3   
+[1] doBy_4.6.11       R.utils_2.10.1    R.oo_1.24.0       R.methodsS3_1.8.1
+[5] openxlsx_4.2.4   
 
 loaded via a namespace (and not attached):
- [1] zip_2.1.1         Rcpp_1.0.6        bslib_0.2.4       compiler_4.0.4   
- [5] pillar_1.6.0      jquerylib_0.1.3   digest_0.6.27     lattice_0.20-41  
- [9] gtable_0.3.0      jsonlite_1.7.2    evaluate_0.14     lifecycle_1.0.0  
-[13] tibble_3.1.1      pkgconfig_2.0.3   rlang_0.4.10      Matrix_1.3-2     
-[17] DBI_1.1.1         yaml_2.2.1        xfun_0.22         dplyr_1.0.5      
-[21] stringr_1.4.0     knitr_1.32        generics_0.1.0    vctrs_0.3.7      
-[25] sass_0.3.1        grid_4.0.4        rprojroot_2.0.2   tidyselect_1.1.0 
-[29] glue_1.4.2        R6_2.5.0          fansi_0.4.2       rmarkdown_2.7    
-[33] tidyr_1.1.3       ggplot2_3.3.3     purrr_0.3.4       magrittr_2.0.1   
-[37] backports_1.2.1   MASS_7.3-53.1     scales_1.1.1      htmltools_0.5.1.1
-[41] ellipsis_0.3.1    assertthat_0.2.1  colorspace_2.0-0  Deriv_4.1.3      
-[45] utf8_1.2.1        stringi_1.5.3     munsell_0.5.0     broom_0.7.6      
-[49] crayon_1.4.1     </code></pre>
+ [1] tidyselect_1.1.1     xfun_0.25            bslib_0.2.5.1       
+ [4] purrr_0.3.4          lattice_0.20-44      colorspace_2.0-2    
+ [7] vctrs_0.3.8          generics_0.1.0       htmltools_0.5.2     
+[10] yaml_2.2.1           utf8_1.2.2           rlang_0.4.11        
+[13] jquerylib_0.1.4      pillar_1.6.2         glue_1.4.2          
+[16] DBI_1.1.1            lifecycle_1.0.0      stringr_1.4.0       
+[19] munsell_0.5.0        gtable_0.3.0         zip_2.2.0           
+[22] curry_0.1.1          evaluate_0.14        knitr_1.33          
+[25] fastmap_1.1.0        fansi_0.5.0          broom_0.7.9         
+[28] Rcpp_1.0.7           scales_1.1.1         backports_1.2.1     
+[31] jsonlite_1.7.2       Deriv_4.1.3          microbenchmark_1.4-7
+[34] ggplot2_3.3.5        digest_0.6.27        stringi_1.7.4       
+[37] dplyr_1.0.7          rprojroot_2.0.2      grid_4.0.4          
+[40] magrittr_2.0.1       sass_0.4.0           tibble_3.1.4        
+[43] crayon_1.4.1         tidyr_1.1.3          pkgconfig_2.0.3     
+[46] ellipsis_0.3.2       MASS_7.3-54          Matrix_1.3-4        
+[49] assertthat_0.2.1     rmarkdown_2.10       R6_2.5.1            
+[52] compiler_4.0.4      </code></pre>
 </div>
 
 
@@ -662,6 +668,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')
