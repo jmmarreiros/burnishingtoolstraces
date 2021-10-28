@@ -7,21 +7,25 @@
 
 This repository contains the data and code for our paper:
 
-> Authors, (YYYY). *Title of your paper goes here*. Name of journal/book
-> <https://doi.org/xxx/xxx>
+> Laure Debreuil, Jérôme Robitaille, Jesus Gonzalez-Urquijo, Joao
+> Marreiros, Anna Stroulia, (Under Revision).
+> *`A ‘family of wear’: Exploring use-wear patterns on ad hoc smoothing, burnishing/polishing tools`*.
+> Journal of Archaeological Theory and Method <https://doi.org/xxx/xxx>
 
 Our pre-print is online here:
 
-> Authors, (YYYY). *Title of your paper goes here*. Name of
-> journal/book, Accessed 21 Apr 2021. Online at
-> <https://doi.org/xxx/xxx>
+> Authors, (YYYY). *A ‘family of wear’: Exploring use-wear patterns on
+> ad hoc smoothing, burnishing/polishing tools*. Name of journal/book,
+> Accessed 28 Oct 2021. Online at <https://doi.org/xxx/xxx>
 
 ### How to cite
 
 Please cite this compendium as:
 
-> Authors, (2021). *Compendium of R code and data for Title of your
-> paper goes here*. Accessed 21 Apr 2021. Online at
+> Laure Debreuil, Jérôme Robitaille, Jesus Gonzalez-Urquijo, Joao
+> Marreiros, Anna Stroulia, (2021). *Compendium of R code and data for A
+> ‘family of wear’: Exploring use-wear patterns on ad hoc smoothing,
+> burnishing/polishing tools*. Accessed 28 Oct 2021. Online at
 > <https://doi.org/xxx/xxx>
 
 ## Contents
