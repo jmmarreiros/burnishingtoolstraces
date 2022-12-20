@@ -1,31 +1,41 @@
 Import raw data
 ================
 Joao Marreiros
-2021-10-28 10:13:29
+2022-12-20 10:20:08
 
--   [Load libraries](#load-libraries)
--   [Get file names, path and info](#get-file-names-path-and-info)
--   [Import and read the original
-    CSV-file](#import-and-read-the-original-csv-file)
--   [Format data](#format-data)
-    -   [Keep only interesting columns and
-        rows](#keep-only-interesting-columns-and-rows)
-    -   [Add headers](#add-headers)
-    -   [Identify results using frame
-        numbers](#identify-results-using-frame-numbers)
-    -   [Shorten the names for
-        parameters](#shorten-the-names-for-parameters)
-    -   [Save units](#save-units)
-    -   [Convert to numeric](#convert-to-numeric)
-    -   [Split the column ‘Name’ into several
-        columns](#split-the-column-name-into-several-columns)
-    -   [Check the result](#check-the-result)
--   [Save data](#save-data)
-    -   [Format name of output file](#format-name-of-output-file)
-    -   [Write to XLSX](#write-to-xlsx)
-    -   [Save R object](#save-r-object)
--   [sessionInfo() and RStudio
-    version](#sessioninfo-and-rstudio-version)
+- <a href="#load-libraries" id="toc-load-libraries">Load libraries</a>
+- <a href="#get-file-names-path-and-info"
+  id="toc-get-file-names-path-and-info">Get file names, path and info</a>
+- <a href="#import-and-read-the-original-csv-file"
+  id="toc-import-and-read-the-original-csv-file">Import and read the
+  original CSV-file</a>
+- <a href="#format-data" id="toc-format-data">Format data</a>
+  - <a href="#keep-only-interesting-columns-and-rows"
+    id="toc-keep-only-interesting-columns-and-rows">Keep only interesting
+    columns and rows</a>
+  - <a href="#add-headers" id="toc-add-headers">Add headers</a>
+  - <a href="#identify-results-using-frame-numbers"
+    id="toc-identify-results-using-frame-numbers">Identify results using
+    frame numbers</a>
+  - <a href="#shorten-the-names-for-parameters"
+    id="toc-shorten-the-names-for-parameters">Shorten the names for
+    parameters</a>
+  - <a href="#save-units" id="toc-save-units">Save units</a>
+  - <a href="#convert-to-numeric" id="toc-convert-to-numeric">Convert to
+    numeric</a>
+  - <a href="#split-the-column-name-into-several-columns"
+    id="toc-split-the-column-name-into-several-columns">Split the column
+    ‘Name’ into several columns</a>
+  - <a href="#check-the-result" id="toc-check-the-result">Check the
+    result</a>
+- <a href="#save-data" id="toc-save-data">Save data</a>
+  - <a href="#format-name-of-output-file"
+    id="toc-format-name-of-output-file">Format name of output file</a>
+  - <a href="#write-to-xlsx" id="toc-write-to-xlsx">Write to XLSX</a>
+  - <a href="#save-r-object" id="toc-save-r-object">Save R object</a>
+- <a href="#sessioninfo-and-rstudio-version"
+  id="toc-sessioninfo-and-rstudio-version">sessionInfo() and RStudio
+  version</a>
 
 ------------------------------------------------------------------------
 
@@ -33,9 +43,9 @@ Joao Marreiros
 
 This R markdown document imports and formats the output of the resulting
 CSV file from the computing ISO 25178-2 parameters in ConfoMap. These
-data is part of the manuscript: *Dubreuil et al. A ‘family of wear’:
-Exploring use-wear patterns on ad hoc smoothing, burnishing/polishing
-tool*
+data is part of the manuscript: *Dubreuil et al. 2023. A ‘Family of
+Wear’: Traceological Patterns on Pebbles Used for Burnishing Pots and
+Processing Other Plastic Mineral Matters*
 
 The script includes three steps:
 
@@ -57,7 +67,7 @@ original folders.
 
 For any questions, comments and inputs, please contact:
 
-Joao Marreiros, <marreiros@rgzm.de>
+Joao Marreiros, <joao.marreiros@rgzm.de>
 
 ------------------------------------------------------------------------
 
@@ -417,8 +427,6 @@ write.xlsx(list(data = data_final, units = units_var_table),
            file = paste0(dir_out, file_out, ".xlsx"))
 ```
 
-    Error in saveWorkbook(wb, file = file, overwrite = overwrite): File already exists!
-
 ## Save R object
 
 ``` r
@@ -433,29 +441,32 @@ saveObject(data_final, file = paste0(dir_out, file_out, ".Rbin"))
 sessionInfo()
 ```
 
-    R version 4.0.4 (2021-02-15)
-    Platform: x86_64-apple-darwin17.0 (64-bit)
-    Running under: macOS Catalina 10.15.7
+    R version 4.1.0 (2021-05-18)
+    Platform: x86_64-w64-mingw32/x64 (64-bit)
+    Running under: Windows 10 x64 (build 19044)
 
     Matrix products: default
-    BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
-    LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
 
     locale:
-    [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+    [1] LC_COLLATE=English_United States.1252 
+    [2] LC_CTYPE=English_United States.1252   
+    [3] LC_MONETARY=English_United States.1252
+    [4] LC_NUMERIC=C                          
+    [5] LC_TIME=English_United States.1252    
 
     attached base packages:
     [1] tools     stats     graphics  grDevices utils     datasets  methods  
     [8] base     
 
     other attached packages:
-    [1] chron_2.3-56      R.utils_2.10.1    R.oo_1.24.0       R.methodsS3_1.8.1
-    [5] openxlsx_4.2.4   
+    [1] chron_2.3-58      R.utils_2.12.2    R.oo_1.25.0       R.methodsS3_1.8.2
+    [5] openxlsx_4.2.5.1 
 
     loaded via a namespace (and not attached):
-     [1] Rcpp_1.0.7      digest_0.6.27   rprojroot_2.0.2 R6_2.5.1       
-     [5] jsonlite_1.7.2  magrittr_2.0.1  evaluate_0.14   zip_2.2.0      
-     [9] rlang_0.4.11    stringi_1.7.4   jquerylib_0.1.4 bslib_0.2.5.1  
-    [13] rmarkdown_2.10  stringr_1.4.0   tinytex_0.33    xfun_0.25      
-    [17] yaml_2.2.1      fastmap_1.1.0   compiler_4.0.4  htmltools_0.5.2
-    [21] knitr_1.33      sass_0.4.0     
+     [1] Rcpp_1.0.9      rstudioapi_0.14 knitr_1.41      magrittr_2.0.3 
+     [5] R6_2.5.1        rlang_1.0.6     fastmap_1.1.0   stringr_1.5.0  
+     [9] xfun_0.35       tinytex_0.43    cli_3.4.1       jquerylib_0.1.4
+    [13] htmltools_0.5.4 yaml_2.3.6      rprojroot_2.0.3 digest_0.6.31  
+    [17] lifecycle_1.0.3 zip_2.2.2       sass_0.4.4      vctrs_0.5.1    
+    [21] cachem_1.0.6    glue_1.6.2      evaluate_0.19   rmarkdown_2.19 
+    [25] stringi_1.7.6   compiler_4.1.0  bslib_0.4.2     jsonlite_1.8.4 

@@ -118,6 +118,7 @@ for (i in num.var) {
 Sa_Sq <- ggplot(data = imp_data) +  
          geom_point(mapping = aes(x = Sa, y = Sq, colour = PolishType)) +
          theme_classic() +
+         theme(text = element_text(size = 14)) +
          labs(colour = "Surface") +
          facet_wrap(~ Sample.ID) +
          scale_colour_hue(h = c(25, 230)) 
@@ -133,6 +134,7 @@ ggsave(filename = file_out, plot = Sa_Sq, path = dir_out, device = "pdf")
 Sq_Vmc <- ggplot(data = imp_data) +  
           geom_point(mapping = aes(x = Sq, y = Vmc, colour = PolishType)) +
           theme_classic() +
+          theme(text = element_text(size = 14)) +
           labs(colour = "Surface") +
           facet_wrap(~ Sample.ID) +
           scale_colour_hue(h = c(25, 230))  
@@ -147,6 +149,7 @@ ggsave(filename = file_out, plot = Sq_Vmc, path = dir_out, device = "pdf")
 furrows <- ggplot(data = imp_data) +  
            geom_point(mapping = aes(x = Mean.depth.of.furrows, y = Mean.density.of.furrows, colour = PolishType)) +
            theme_classic() +
+           theme(text = element_text(size = 14)) +
            labs(colour = "Surface", x = "Mean depth of furrows", y = "Mean density of furrows") +
            facet_wrap(~ Sample.ID) +
            scale_colour_hue(h = c(25, 230))

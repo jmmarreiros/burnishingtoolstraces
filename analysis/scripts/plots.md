@@ -1,27 +1,36 @@
 Plots
 ================
 Joao Marreiros
-2021-10-28 10:15:11
+2022-12-20 10:25:29
 
--   [Load packages](#load-packages)
--   [Get name, path and information of the
-    file](#get-name-path-and-information-of-the-file)
--   [Load data into R object](#load-data-into-r-object)
--   [Prepare variables](#prepare-variables)
-    -   [Define numeric variables](#define-numeric-variables)
--   [Plot each of the selected numeric
-    variables](#plot-each-of-the-selected-numeric-variables)
-    -   [Plot just original samples/surfaces organized by
-        parameter](#plot-just-original-samplessurfaces-organized-by-parameter)
-    -   [Scatterplots of selected variables combined with Sample.ID and
-        Polish
-        type](#scatterplots-of-selected-variables-combined-with-sampleid-and-polish-type)
-        -   [Sa vs. Sq](#sa-vs-sq)
-        -   [Sq vs. Vmc](#sq-vs-vmc)
-        -   [Mean depth of furrows vs. mean density of
-            furrows](#mean-depth-of-furrows-vs-mean-density-of-furrows)
--   [sessionInfo() and RStudio
-    version](#sessioninfo-and-rstudio-version)
+- <a href="#load-packages" id="toc-load-packages">Load packages</a>
+- <a href="#get-name-path-and-information-of-the-file"
+  id="toc-get-name-path-and-information-of-the-file">Get name, path and
+  information of the file</a>
+- <a href="#load-data-into-r-object" id="toc-load-data-into-r-object">Load
+  data into R object</a>
+- <a href="#prepare-variables" id="toc-prepare-variables">Prepare
+  variables</a>
+  - <a href="#define-numeric-variables"
+    id="toc-define-numeric-variables">Define numeric variables</a>
+- <a href="#plot-each-of-the-selected-numeric-variables"
+  id="toc-plot-each-of-the-selected-numeric-variables">Plot each of the
+  selected numeric variables</a>
+  - <a href="#plot-just-original-samplessurfaces-organized-by-parameter"
+    id="toc-plot-just-original-samplessurfaces-organized-by-parameter">Plot
+    just original samples/surfaces organized by parameter</a>
+  - <a
+    href="#scatterplots-of-selected-variables-combined-with-sampleid-and-polish-type"
+    id="toc-scatterplots-of-selected-variables-combined-with-sampleid-and-polish-type">Scatterplots
+    of selected variables combined with Sample.ID and Polish type</a>
+    - <a href="#sa-vs-sq" id="toc-sa-vs-sq">Sa vs. Sq</a>
+    - <a href="#sq-vs-vmc" id="toc-sq-vs-vmc">Sq vs. Vmc</a>
+    - <a href="#mean-depth-of-furrows-vs-mean-density-of-furrows"
+      id="toc-mean-depth-of-furrows-vs-mean-density-of-furrows">Mean depth of
+      furrows vs. mean density of furrows</a>
+- <a href="#sessioninfo-and-rstudio-version"
+  id="toc-sessioninfo-and-rstudio-version">sessionInfo() and RStudio
+  version</a>
 
 **Brief description of the script**
 
@@ -43,7 +52,7 @@ original folders.
 
 For any questions, comments and inputs, please contact:
 
-Joao Marreiros, <marreiros@rgzm.de>
+Joao Marreiros, <joao.marreiros@rgzm.de>
 
 ------------------------------------------------------------------------
 
@@ -204,7 +213,7 @@ for (i in num.var) {
 }
 ```
 
-    Error in sub("([^.]+)\\.[[:alnum:]]+$", "\\1", x): object 'info_in' not found
+    Error in is.factor(x): object 'info_in' not found
 
 ![](plots_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
@@ -217,6 +226,7 @@ for (i in num.var) {
 Sa_Sq <- ggplot(data = imp_data) +  
          geom_point(mapping = aes(x = Sa, y = Sq, colour = PolishType)) +
          theme_classic() +
+         theme(text = element_text(size = 14)) +
          labs(colour = "Surface") +
          facet_wrap(~ Sample.ID) +
          scale_colour_hue(h = c(25, 230)) 
@@ -230,7 +240,7 @@ print(Sa_Sq)
 file_out <- paste0(file_path_sans_ext(info_in[["file"]]), "_scatterplot_Sa-Sq", ".pdf")
 ```
 
-    Error in sub("([^.]+)\\.[[:alnum:]]+$", "\\1", x): object 'info_in' not found
+    Error in is.factor(x): object 'info_in' not found
 
 ``` r
 ggsave(filename = file_out, plot = Sa_Sq, path = dir_out, device = "pdf")
@@ -244,6 +254,7 @@ ggsave(filename = file_out, plot = Sa_Sq, path = dir_out, device = "pdf")
 Sq_Vmc <- ggplot(data = imp_data) +  
           geom_point(mapping = aes(x = Sq, y = Vmc, colour = PolishType)) +
           theme_classic() +
+          theme(text = element_text(size = 14)) +
           labs(colour = "Surface") +
           facet_wrap(~ Sample.ID) +
           scale_colour_hue(h = c(25, 230))  
@@ -256,7 +267,7 @@ print(Sq_Vmc)
 file_out <- paste0(file_path_sans_ext(info_in[["file"]]), "_scatterplot_Sq-Vmc", ".pdf")
 ```
 
-    Error in sub("([^.]+)\\.[[:alnum:]]+$", "\\1", x): object 'info_in' not found
+    Error in is.factor(x): object 'info_in' not found
 
 ``` r
 ggsave(filename = file_out, plot = Sq_Vmc, path = dir_out, device = "pdf")
@@ -270,6 +281,7 @@ ggsave(filename = file_out, plot = Sq_Vmc, path = dir_out, device = "pdf")
 furrows <- ggplot(data = imp_data) +  
            geom_point(mapping = aes(x = Mean.depth.of.furrows, y = Mean.density.of.furrows, colour = PolishType)) +
            theme_classic() +
+           theme(text = element_text(size = 14)) +
            labs(colour = "Surface", x = "Mean depth of furrows", y = "Mean density of furrows") +
            facet_wrap(~ Sample.ID) +
            scale_colour_hue(h = c(25, 230))
@@ -282,7 +294,7 @@ print(furrows)
 file_out <- paste0(file_path_sans_ext(info_in[["file"]]), "_scatterplot_furrows", ".pdf")
 ```
 
-    Error in sub("([^.]+)\\.[[:alnum:]]+$", "\\1", x): object 'info_in' not found
+    Error in is.factor(x): object 'info_in' not found
 
 ``` r
 ggsave(filename = file_out, plot = furrows, path = dir_out, device = "pdf")
@@ -298,40 +310,48 @@ ggsave(filename = file_out, plot = furrows, path = dir_out, device = "pdf")
 sessionInfo()
 ```
 
-    R version 4.0.4 (2021-02-15)
-    Platform: x86_64-apple-darwin17.0 (64-bit)
-    Running under: macOS Catalina 10.15.7
+    R version 4.1.0 (2021-05-18)
+    Platform: x86_64-w64-mingw32/x64 (64-bit)
+    Running under: Windows 10 x64 (build 19044)
 
     Matrix products: default
-    BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
-    LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
 
     locale:
-    [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+    [1] LC_COLLATE=English_United States.1252 
+    [2] LC_CTYPE=English_United States.1252   
+    [3] LC_MONETARY=English_United States.1252
+    [4] LC_NUMERIC=C                          
+    [5] LC_TIME=English_United States.1252    
 
     attached base packages:
     [1] tools     stats     graphics  grDevices utils     datasets  methods  
     [8] base     
 
     other attached packages:
-     [1] wesanderson_0.3.6 forcats_0.5.1     stringr_1.4.0     dplyr_1.0.7      
-     [5] purrr_0.3.4       readr_2.0.1       tidyr_1.1.3       tibble_3.1.4     
-     [9] tidyverse_1.3.1   ggplot2_3.3.5     R.utils_2.10.1    R.oo_1.24.0      
-    [13] R.methodsS3_1.8.1
+     [1] wesanderson_0.3.6 forcats_0.5.2     stringr_1.5.0     dplyr_1.0.10     
+     [5] purrr_0.3.5       readr_2.1.3       tidyr_1.2.1       tibble_3.1.8     
+     [9] tidyverse_1.3.2   ggplot2_3.4.0     R.utils_2.12.2    R.oo_1.25.0      
+    [13] R.methodsS3_1.8.2
 
     loaded via a namespace (and not attached):
-     [1] Rcpp_1.0.7       lubridate_1.7.10 assertthat_0.2.1 rprojroot_2.0.2 
-     [5] digest_0.6.27    utf8_1.2.2       R6_2.5.1         cellranger_1.1.0
-     [9] backports_1.2.1  reprex_2.0.1     evaluate_0.14    highr_0.9       
-    [13] httr_1.4.2       pillar_1.6.2     rlang_0.4.11     readxl_1.3.1    
-    [17] rstudioapi_0.13  jquerylib_0.1.4  rmarkdown_2.10   labeling_0.4.2  
-    [21] tinytex_0.33     munsell_0.5.0    broom_0.7.9      compiler_4.0.4  
-    [25] modelr_0.1.8     xfun_0.25        pkgconfig_2.0.3  htmltools_0.5.2 
-    [29] tidyselect_1.1.1 fansi_0.5.0      crayon_1.4.1     tzdb_0.1.2      
-    [33] dbplyr_2.1.1     withr_2.4.2      grid_4.0.4       jsonlite_1.7.2  
-    [37] gtable_0.3.0     lifecycle_1.0.0  DBI_1.1.1        magrittr_2.0.1  
-    [41] scales_1.1.1     cli_3.0.1        stringi_1.7.4    farver_2.1.0    
-    [45] fs_1.5.0         xml2_1.3.2       bslib_0.2.5.1    ellipsis_0.3.2  
-    [49] generics_0.1.0   vctrs_0.3.8      glue_1.4.2       hms_1.1.0       
-    [53] fastmap_1.1.0    yaml_2.2.1       colorspace_2.0-2 rvest_1.0.1     
-    [57] knitr_1.33       haven_2.4.3      sass_0.4.0      
+     [1] lubridate_1.9.0     assertthat_0.2.1    rprojroot_2.0.3    
+     [4] digest_0.6.31       utf8_1.2.2          R6_2.5.1           
+     [7] cellranger_1.1.0    backports_1.4.1     reprex_2.0.2       
+    [10] evaluate_0.19       highr_0.9           httr_1.4.4         
+    [13] pillar_1.8.1        rlang_1.0.6         googlesheets4_1.0.1
+    [16] readxl_1.4.1        rstudioapi_0.14     jquerylib_0.1.4    
+    [19] rmarkdown_2.19      labeling_0.4.2      googledrive_2.0.0  
+    [22] tinytex_0.43        munsell_0.5.0       broom_1.0.2        
+    [25] compiler_4.1.0      modelr_0.1.10       xfun_0.35          
+    [28] pkgconfig_2.0.3     htmltools_0.5.4     tidyselect_1.2.0   
+    [31] fansi_1.0.3         crayon_1.5.2        tzdb_0.3.0         
+    [34] dbplyr_2.2.1        withr_2.5.0         grid_4.1.0         
+    [37] jsonlite_1.8.4      gtable_0.3.1        lifecycle_1.0.3    
+    [40] DBI_1.1.3           magrittr_2.0.3      scales_1.2.1       
+    [43] cli_3.4.1           stringi_1.7.6       cachem_1.0.6       
+    [46] farver_2.1.1        fs_1.5.2            xml2_1.3.3         
+    [49] bslib_0.4.2         ellipsis_0.3.2      generics_0.1.3     
+    [52] vctrs_0.5.1         glue_1.6.2          hms_1.1.2          
+    [55] fastmap_1.1.0       yaml_2.3.6          timechange_0.1.1   
+    [58] colorspace_2.0-3    gargle_1.2.1        rvest_1.0.3        
+    [61] knitr_1.41          haven_2.5.1         sass_0.4.4         

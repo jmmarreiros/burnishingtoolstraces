@@ -1,24 +1,32 @@
 Summary statistics
 ================
 Joao Marreiros
-2021-10-28 10:13:54
+2022-12-20 10:20:49
 
--   [Load packages](#load-packages)
--   [Get names, path and information of all
-    files](#get-names-path-and-information-of-all-files)
--   [Load data into R object](#load-data-into-r-object)
--   [Define numeric variables](#define-numeric-variables)
--   [Compute summary statistics](#compute-summary-statistics)
-    -   [Create function to compute the statistics at
-        once](#create-function-to-compute-the-statistics-at-once)
-    -   [Compute the summary statistics in
-        groups](#compute-the-summary-statistics-in-groups)
--   [Save data](#save-data)
-    -   [Format name of output file](#format-name-of-output-file)
-    -   [Write to XLSX](#write-to-xlsx)
-    -   [Save R object](#save-r-object)
--   [sessionInfo() and RStudio
-    version](#sessioninfo-and-rstudio-version)
+- <a href="#load-packages" id="toc-load-packages">Load packages</a>
+- <a href="#get-names-path-and-information-of-all-files"
+  id="toc-get-names-path-and-information-of-all-files">Get names, path and
+  information of all files</a>
+- <a href="#load-data-into-r-object" id="toc-load-data-into-r-object">Load
+  data into R object</a>
+- <a href="#define-numeric-variables"
+  id="toc-define-numeric-variables">Define numeric variables</a>
+- <a href="#compute-summary-statistics"
+  id="toc-compute-summary-statistics">Compute summary statistics</a>
+  - <a href="#create-function-to-compute-the-statistics-at-once"
+    id="toc-create-function-to-compute-the-statistics-at-once">Create
+    function to compute the statistics at once</a>
+  - <a href="#compute-the-summary-statistics-in-groups"
+    id="toc-compute-the-summary-statistics-in-groups">Compute the summary
+    statistics in groups</a>
+- <a href="#save-data" id="toc-save-data">Save data</a>
+  - <a href="#format-name-of-output-file"
+    id="toc-format-name-of-output-file">Format name of output file</a>
+  - <a href="#write-to-xlsx" id="toc-write-to-xlsx">Write to XLSX</a>
+  - <a href="#save-r-object" id="toc-save-r-object">Save R object</a>
+- <a href="#sessioninfo-and-rstudio-version"
+  id="toc-sessioninfo-and-rstudio-version">sessionInfo() and RStudio
+  version</a>
 
 ------------------------------------------------------------------------
 
@@ -26,18 +34,18 @@ Joao Marreiros
 
 This R markdown document computes the output data of the resulting CSV
 file from the computing ISO 25178-2 parameters in ConfoMap. These data
-is part of the manuscript: *Dubreuil et al. A ‘family of wear’:
-Exploring use-wear patterns on ad hoc smoothing, burnishing/polishing
-tool*
+is part of the manuscript: *Dubreuil et al. 2023. A ‘Family of Wear’:
+Traceological Patterns on Pebbles Used for Burnishing Pots and
+Processing Other Plastic Mineral Matters*
 
 It computes the following statistics:
 
--   n (sample size = `length`): number of measurements  
--   smallest value (`min`)  
--   largest value (`max`)
--   mean  
--   median  
--   standard deviation (`sd`)
+- n (sample size = `length`): number of measurements  
+- smallest value (`min`)  
+- largest value (`max`)
+- mean  
+- median  
+- standard deviation (`sd`)
 
 This R project and respective scripts follow the procedures described by
 Marwick et al. 2017.
@@ -52,7 +60,7 @@ original folders.
 
 For any questions, comments and inputs, please contact:
 
-Joao Marreiros, <marreiros@rgzm.de>
+Joao Marreiros, <joao.marreiros@rgzm.de>
 
 ------------------------------------------------------------------------
 
@@ -310,16 +318,13 @@ str(s_it)
 file_out <- "datastats"
 ```
 
-The file will be saved as
-“\~/analysis/summary\_stats/datastats.\[ext\]”.
+The file will be saved as “\~/analysis/summary_stats/datastats.\[ext\]”.
 
 ## Write to XLSX
 
 ``` r
 write.xlsx(list(Sample_ImpTime = s_it), file = paste0(dir_out, file_out, ".xlsx"))
 ```
-
-    Error in saveWorkbook(wb, file = file, overwrite = overwrite): File already exists!
 
 ## Save R object
 
@@ -335,41 +340,43 @@ saveObject(s_it, file = paste0(dir_out, file_out, ".Rbin"))
 sessionInfo()
 ```
 
-    R version 4.0.4 (2021-02-15)
-    Platform: x86_64-apple-darwin17.0 (64-bit)
-    Running under: macOS Catalina 10.15.7
+    R version 4.1.0 (2021-05-18)
+    Platform: x86_64-w64-mingw32/x64 (64-bit)
+    Running under: Windows 10 x64 (build 19044)
 
     Matrix products: default
-    BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
-    LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
 
     locale:
-    [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+    [1] LC_COLLATE=English_United States.1252 
+    [2] LC_CTYPE=English_United States.1252   
+    [3] LC_MONETARY=English_United States.1252
+    [4] LC_NUMERIC=C                          
+    [5] LC_TIME=English_United States.1252    
 
     attached base packages:
     [1] tools     stats     graphics  grDevices utils     datasets  methods  
     [8] base     
 
     other attached packages:
-    [1] doBy_4.6.11       R.utils_2.10.1    R.oo_1.24.0       R.methodsS3_1.8.1
-    [5] openxlsx_4.2.4   
+    [1] doBy_4.6.15       R.utils_2.12.2    R.oo_1.25.0       R.methodsS3_1.8.2
+    [5] openxlsx_4.2.5.1 
 
     loaded via a namespace (and not attached):
-     [1] tinytex_0.33         tidyselect_1.1.1     xfun_0.25           
-     [4] bslib_0.2.5.1        purrr_0.3.4          lattice_0.20-44     
-     [7] colorspace_2.0-2     vctrs_0.3.8          generics_0.1.0      
-    [10] htmltools_0.5.2      yaml_2.2.1           utf8_1.2.2          
-    [13] rlang_0.4.11         jquerylib_0.1.4      pillar_1.6.2        
-    [16] glue_1.4.2           DBI_1.1.1            lifecycle_1.0.0     
-    [19] stringr_1.4.0        munsell_0.5.0        gtable_0.3.0        
-    [22] zip_2.2.0            curry_0.1.1          evaluate_0.14       
-    [25] knitr_1.33           fastmap_1.1.0        fansi_0.5.0         
-    [28] broom_0.7.9          Rcpp_1.0.7           scales_1.1.1        
-    [31] backports_1.2.1      jsonlite_1.7.2       Deriv_4.1.3         
-    [34] microbenchmark_1.4-7 ggplot2_3.3.5        digest_0.6.27       
-    [37] stringi_1.7.4        dplyr_1.0.7          rprojroot_2.0.2     
-    [40] grid_4.0.4           magrittr_2.0.1       sass_0.4.0          
-    [43] tibble_3.1.4         crayon_1.4.1         tidyr_1.1.3         
-    [46] pkgconfig_2.0.3      ellipsis_0.3.2       MASS_7.3-54         
-    [49] Matrix_1.3-4         assertthat_0.2.1     rmarkdown_2.10      
-    [52] R6_2.5.1             compiler_4.0.4      
+     [1] tinytex_0.43         tidyselect_1.2.0     xfun_0.35           
+     [4] bslib_0.4.2          purrr_0.3.5          lattice_0.20-45     
+     [7] colorspace_2.0-3     vctrs_0.5.1          generics_0.1.3      
+    [10] htmltools_0.5.4      yaml_2.3.6           utf8_1.2.2          
+    [13] rlang_1.0.6          jquerylib_0.1.4      pillar_1.8.1        
+    [16] glue_1.6.2           DBI_1.1.3            lifecycle_1.0.3     
+    [19] stringr_1.5.0        munsell_0.5.0        gtable_0.3.1        
+    [22] zip_2.2.2            evaluate_0.19        knitr_1.41          
+    [25] fastmap_1.1.0        fansi_1.0.3          broom_1.0.2         
+    [28] Rcpp_1.0.9           scales_1.2.1         backports_1.4.1     
+    [31] cachem_1.0.6         jsonlite_1.8.4       microbenchmark_1.4.9
+    [34] Deriv_4.1.3          ggplot2_3.4.0        digest_0.6.31       
+    [37] stringi_1.7.6        dplyr_1.0.10         rprojroot_2.0.3     
+    [40] grid_4.1.0           cli_3.4.1            magrittr_2.0.3      
+    [43] sass_0.4.4           tibble_3.1.8         tidyr_1.2.1         
+    [46] pkgconfig_2.0.3      MASS_7.3-58.1        Matrix_1.5-3        
+    [49] assertthat_0.2.1     rmarkdown_2.19       rstudioapi_0.14     
+    [52] R6_2.5.1             compiler_4.1.0      
