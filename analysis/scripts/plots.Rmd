@@ -36,7 +36,7 @@ To compile this markdown document do not delete or move files from their origina
 
 For any questions, comments and inputs, please contact:
 
-Joao Marreiros, marreiros@rgzm.de
+Joao Marreiros, joao.marreiros@rgzm.de
 
 
 ---

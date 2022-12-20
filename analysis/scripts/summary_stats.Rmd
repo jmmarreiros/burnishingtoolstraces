@@ -29,7 +29,7 @@ knitr::opts_chunk$set(comment = NA, message = FALSE, indent = "", error = TRUE)
 
 __Brief description of the script__
 
-This R markdown document computes the output data of the resulting CSV file from the computing ISO 25178-2 parameters in ConfoMap. These data is part of the manuscript: *Dubreuil et al. A ‘family of wear’: Exploring use-wear patterns on ad hoc smoothing, burnishing/polishing tool*
+This R markdown document computes the output data of the resulting CSV file from the computing ISO 25178-2 parameters in ConfoMap. These data is part of the manuscript: *Dubreuil et al. 2023. A ‘Family of Wear’: Traceological Patterns on Pebbles Used for Burnishing Pots and Processing Other Plastic Mineral Matters*
 
 It computes the following statistics:  
 
@@ -49,7 +49,7 @@ To compile this markdown document do not delete or move files from their origina
 
 For any questions, comments and inputs, please contact:
 
-Joao Marreiros, marreiros@rgzm.de
+Joao Marreiros, joao.marreiros@rgzm.de
 
 ---
 
